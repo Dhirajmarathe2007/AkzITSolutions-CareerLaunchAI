@@ -1,5 +1,7 @@
 # AkzITSolutions-CareerLaunchAI
 # CareerLaunch AI
+Live Demo :-
+https://dhirajmarathe2007.github.io/AkzITSolutions-CareerLaunchAI/
 
 CareerLaunch AI is a modern career management platform designed to help students organize, track, and accelerate their professional growth. The platform provides dedicated tools for skill tracking, project management, internship application tracking, analytics, and profile management in a single dashboard.
 
