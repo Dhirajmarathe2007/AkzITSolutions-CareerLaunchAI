@@ -1,0 +1,2151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="CareerLaunch AI – Learn. Build. Track. Get Hired. The complete platform for student career development." />
+  <meta name="theme-color" content="#0A0A0B" />
+  <title>CareerLaunch AI – Learn. Build. Track. Get Hired.</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ══════════════════════════════════════════════
+       RESET & FOUNDATIONS
+    ══════════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:        #0A0A0B;
+      --black-2:      #111114;
+      --black-3:      #18181C;
+      --black-4:      #1E1E24;
+      --black-5:      #242430;
+      --gold:         #C9A84C;
+      --gold-light:   #E2C97E;
+      --gold-dim:     #8A6E2F;
+      --gold-pale:    #F0E4C0;
+      --gold-glow:    rgba(201,168,76,.10);
+      --gold-glow-2:  rgba(201,168,76,.06);
+      --gold-line:    rgba(201,168,76,.22);
+      --gold-line-2:  rgba(201,168,76,.12);
+      --white:        #F5F0E8;
+      --white-2:      #C8C0B0;
+      --white-3:      #7A7468;
+      --white-4:      #4A4640;
+      --border:       rgba(255,255,255,.055);
+      --border-2:     rgba(255,255,255,.08);
+      --border-gold:  rgba(201,168,76,.18);
+      --border-gold-2:rgba(201,168,76,.28);
+      --serif:        'Cormorant Garamond', Georgia, serif;
+      --sans:         'DM Sans', system-ui, sans-serif;
+    }
+
+    html {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--sans);
+      font-size: 16px;
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body { overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    img { display: block; max-width: 100%; }
+
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--black); }
+    ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 3px; }
+
+    /* ══════════════════════════════════════════════
+       SCROLL REVEAL
+    ══════════════════════════════════════════════ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .75s cubic-bezier(.16,1,.3,1),
+                  transform .75s cubic-bezier(.16,1,.3,1);
+    }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+    .reveal-d1 { transition-delay: .07s; }
+    .reveal-d2 { transition-delay: .14s; }
+    .reveal-d3 { transition-delay: .21s; }
+    .reveal-d4 { transition-delay: .28s; }
+    .reveal-d5 { transition-delay: .35s; }
+    .reveal-d6 { transition-delay: .42s; }
+
+    /* ══════════════════════════════════════════════
+       HEADER  (Arclight: ultra-thin, spaced caps)
+    ══════════════════════════════════════════════ */
+    .site-header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 60px;
+      z-index: 900;
+      display: flex;
+      align-items: center;
+      padding: 0 40px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(10,10,11,.88);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+    }
+
+    .hdr-left {
+      display: flex; align-items: center; gap: 12px; flex: 0 0 auto;
+    }
+
+    .hdr-logo-mark {
+      width: 28px; height: 28px;
+      border: 1px solid var(--gold-line);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(201,168,76,.07);
+    }
+    .hdr-logo-mark svg { width: 16px; height: 16px; }
+
+    .hdr-brand {
+      font-family: var(--sans);
+      font-size: 12.5px;
+      font-weight: 500;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+
+    .hdr-nav {
+      flex: 1;
+      display: flex; align-items: center;
+      justify-content: center; gap: 48px;
+    }
+    .hdr-nav a {
+      font-size: 11px; font-weight: 400;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--white-3);
+      transition: color .2s;
+    }
+    .hdr-nav a:hover { color: var(--white); }
+
+    .hdr-right {
+      display: flex; align-items: center; gap: 24px; flex: 0 0 auto;
+    }
+
+    .hdr-signin {
+      font-size: 11px; font-weight: 400;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--white-3); transition: color .2s;
+    }
+    .hdr-signin:hover { color: var(--white); }
+
+    .btn-access {
+      display: inline-flex; align-items: center; gap: 8px;
+      height: 34px; padding: 0 18px;
+      background: var(--gold); color: var(--black);
+      border-radius: 999px;
+      font-size: 10.5px; font-weight: 500;
+      letter-spacing: .13em; text-transform: uppercase;
+      transition: background .2s, transform .15s;
+      white-space: nowrap;
+    }
+    .btn-access:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+    .hdr-menu-btn {
+      display: none; background: none; border: none;
+      cursor: pointer; color: var(--white-2); padding: 4px;
+    }
+
+    /* ══════════════════════════════════════════════
+       MOBILE DRAWER
+    ══════════════════════════════════════════════ */
+    .drawer-bg {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,.75); z-index: 950;
+    }
+    .drawer-bg.open { display: block; }
+
+    .drawer {
+      position: fixed; top: 0; left: 0;
+      width: 280px; height: 100vh;
+      background: var(--black-2);
+      border-right: 1px solid var(--border);
+      z-index: 960;
+      transform: translateX(-100%);
+      transition: transform .32s cubic-bezier(.16,1,.3,1);
+      display: flex; flex-direction: column; padding: 20px;
+    }
+    .drawer.open { transform: translateX(0); }
+
+    .drawer-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-bottom: 20px; border-bottom: 1px solid var(--border); margin-bottom: 24px;
+    }
+    .drawer-close {
+      background: none; border: none; cursor: pointer;
+      color: var(--white-3); font-size: 22px; line-height: 1;
+    }
+    .drawer-nav { display: flex; flex-direction: column; gap: 4px; }
+    .drawer-nav a {
+      display: block; padding: 12px 16px;
+      font-size: 11px; letter-spacing: .13em; text-transform: uppercase;
+      color: var(--white-2); border-radius: 6px;
+      transition: background .15s, color .15s;
+    }
+    .drawer-nav a:hover { background: var(--gold-glow); color: var(--gold-light); }
+    .drawer-cta {
+      margin-top: auto; padding-top: 24px; border-top: 1px solid var(--border);
+    }
+    .drawer-cta .btn-access { width: 100%; justify-content: center; height: 44px; font-size: 12px; }
+
+    /* ══════════════════════════════════════════════
+       HERO  (unchanged — already approved)
+    ══════════════════════════════════════════════ */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 140px 40px 120px;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: -10%; left: 50%;
+      transform: translateX(-50%);
+      width: 900px; height: 600px;
+      background: radial-gradient(ellipse at center,
+        rgba(201,168,76,.18) 0%,
+        rgba(201,168,76,.06) 40%,
+        transparent 70%);
+      pointer-events: none; z-index: 0;
+    }
+    .hero > * { position: relative; z-index: 1; }
+
+    .hero-file-tag {
+      display: flex; align-items: center; gap: 16px;
+      justify-content: center; margin-bottom: 40px;
+      color: var(--gold);
+      font-size: 11px; font-weight: 400;
+      letter-spacing: .22em; text-transform: uppercase;
+    }
+    .hero-file-tag::before, .hero-file-tag::after {
+      content: ''; display: block; width: 60px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-line));
+    }
+    .hero-file-tag::after { background: linear-gradient(90deg, var(--gold-line), transparent); }
+
+    .hero-h1 {
+      font-family: var(--serif);
+      font-size: clamp(52px, 8vw, 96px);
+      font-weight: 600;
+      line-height: 1.04;
+      letter-spacing: -.01em;
+      color: var(--white);
+      max-width: 900px; margin: 0 auto 16px;
+    }
+    .hero-h1 em { font-style: italic; color: var(--gold); }
+
+    .hero-sub {
+      font-size: 16px; font-weight: 300; line-height: 1.75;
+      color: var(--white-2); max-width: 540px; margin: 0 auto 48px;
+    }
+
+    .hero-cta {
+      display: flex; gap: 16px; align-items: center;
+      justify-content: center; flex-wrap: wrap; margin-bottom: 56px;
+    }
+
+    .btn-watch {
+      display: inline-flex; align-items: center; gap: 10px;
+      height: 44px; padding: 0 24px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 13px; font-weight: 400; color: var(--white-2);
+      transition: background .2s, border-color .2s, color .2s;
+    }
+    .btn-watch:hover {
+      background: rgba(255,255,255,.09);
+      border-color: rgba(255,255,255,.12); color: var(--white);
+    }
+    .btn-watch-icon {
+      width: 20px; height: 20px; border-radius: 50%;
+      border: 1px solid var(--white-3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 8px;
+    }
+
+    .btn-hero-main {
+      display: inline-flex; align-items: center; gap: 10px;
+      height: 44px; padding: 0 28px;
+      background: var(--gold); color: var(--black);
+      border-radius: 999px;
+      font-size: 13px; font-weight: 500; letter-spacing: .04em;
+      transition: background .2s, transform .15s;
+    }
+    .btn-hero-main:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+    .hero-trust {
+      display: flex; align-items: center; gap: 10px;
+      justify-content: center; flex-wrap: wrap;
+    }
+    .trust-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 14px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid var(--border); border-radius: 999px;
+      font-size: 11px; font-weight: 400; letter-spacing: .06em; color: var(--white-3);
+    }
+    .trust-pill strong { font-weight: 500; color: var(--gold); }
+
+    /* ══════════════════════════════════════════════
+       SHARED LAYOUT HELPERS
+    ══════════════════════════════════════════════ */
+    .wrap {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding-left: 40px;
+      padding-right: 40px;
+    }
+
+    .sec-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 22px;
+    }
+    .sec-tag::before {
+      content: '';
+      display: block;
+      width: 20px; height: 1px;
+      background: var(--gold-line);
+    }
+
+    .sec-title {
+      font-family: var(--serif);
+      font-size: clamp(34px, 4.5vw, 58px);
+      font-weight: 600;
+      line-height: 1.07;
+      letter-spacing: -.01em;
+      color: var(--white);
+    }
+    .sec-title em { font-style: italic; color: var(--gold); }
+
+    .sec-sub {
+      font-size: 14.5px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--white-2);
+    }
+
+    /* ══════════════════════════════════════════════
+       SECTION — TRUSTED BY
+       Elevated: horizontal rule, shimmer logos, ref number
+    ══════════════════════════════════════════════ */
+    .trusted-band {
+      position: relative;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    /* faint center horizontal glow strip */
+    .trusted-band::before {
+      content: '';
+      position: absolute;
+      left: 50%; top: 50%;
+      transform: translate(-50%,-50%);
+      width: 700px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-line), transparent);
+      pointer-events: none;
+    }
+
+    .trusted-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 48px 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .trusted-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .trusted-label {
+      font-size: 9px;
+      font-weight: 400;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+      color: var(--white-4);
+    }
+
+    .trusted-logos {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      flex-wrap: wrap;
+      width: 100%;
+    }
+
+    .trusted-logo-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 36px;
+      border-right: 1px solid var(--border);
+      transition: color .25s;
+      cursor: default;
+      position: relative;
+    }
+    .trusted-logo-item:last-child { border-right: none; }
+
+    .trusted-logo-item::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 0; height: 1px;
+      background: var(--gold);
+      transition: width .3s;
+    }
+    .trusted-logo-item:hover::after { width: 60%; }
+
+    .trusted-logo-name {
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--white-4);
+      transition: color .25s;
+    }
+    .trusted-logo-item:hover .trusted-logo-name { color: var(--white-2); }
+
+    /* ══════════════════════════════════════════════
+       SECTION — FEATURES
+       Elevated: editorial grid w/ numbered cells,
+       border-separated, side accent on hover
+    ══════════════════════════════════════════════ */
+    .feat-section {
+      padding: 130px 0;
+    }
+
+    .feat-head {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: end;
+      margin-bottom: 72px;
+    }
+
+    .feat-head-left {}
+    .feat-head-right {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      gap: 20px;
+    }
+    .feat-head-right p {
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--white-3);
+      max-width: 400px;
+      margin-left: auto;
+    }
+
+    .feat-head-link {
+      display: inline-flex; align-items: center; gap: 10px;
+      margin-left: auto;
+      font-size: 11px; font-weight: 400;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--gold);
+      transition: gap .2s;
+    }
+    .feat-head-link:hover { gap: 16px; }
+
+    /* 3×2 grid with border separators — Arclight cell style */
+    .feat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--border);
+      border-left: 1px solid var(--border);
+    }
+
+    .feat-cell {
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 48px 40px;
+      position: relative;
+      overflow: hidden;
+      transition: background .3s;
+      background: transparent;
+    }
+    .feat-cell:hover { background: rgba(201,168,76,.03); }
+
+    /* Gold vertical accent on hover — Arclight signature */
+    .feat-cell::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 1px; height: 0;
+      background: linear-gradient(180deg, var(--gold), transparent);
+      transition: height .4s cubic-bezier(.16,1,.3,1);
+      z-index: 1;
+    }
+    .feat-cell:hover::before { height: 100%; }
+
+    /* large background index number */
+    .feat-cell::after {
+      content: attr(data-num);
+      position: absolute;
+      top: -10px; right: 20px;
+      font-family: var(--serif);
+      font-size: 80px;
+      font-weight: 700;
+      color: rgba(201,168,76,.04);
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+      transition: color .3s;
+    }
+    .feat-cell:hover::after { color: rgba(201,168,76,.07); }
+
+    .feat-num-label {
+      font-size: 9px;
+      font-weight: 400;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      margin-bottom: 32px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .feat-num-label::after {
+      content: '';
+      display: block; flex: 1; height: 1px;
+      background: linear-gradient(90deg, var(--border-gold), transparent);
+    }
+
+    .feat-icon-box {
+      width: 42px; height: 42px;
+      border: 1px solid var(--border-gold);
+      border-radius: 10px;
+      background: rgba(201,168,76,.06);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      margin-bottom: 22px;
+      transition: border-color .25s, background .25s;
+    }
+    .feat-cell:hover .feat-icon-box {
+      border-color: var(--border-gold-2);
+      background: rgba(201,168,76,.1);
+    }
+
+    .feat-cell-title {
+      font-family: var(--serif);
+      font-size: 22px; font-weight: 600;
+      color: var(--white); line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .feat-cell-desc {
+      font-size: 13px; font-weight: 300;
+      line-height: 1.75; color: var(--white-3);
+    }
+
+    /* ══════════════════════════════════════════════
+       SECTION — DASHBOARD SHOWCASE
+       Elevated: dark bg band, command window w/ depth
+    ══════════════════════════════════════════════ */
+    .showcase-band {
+      background: var(--black-2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Ambient corner glow */
+    .showcase-band::before {
+      content: '';
+      position: absolute; top: 0; right: 0;
+      width: 600px; height: 600px;
+      background: radial-gradient(ellipse at top right, rgba(201,168,76,.07) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .showcase-inner {
+      position: relative;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 130px 40px;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 96px;
+      align-items: center;
+    }
+
+    .showcase-left {
+      display: flex; flex-direction: column; gap: 36px;
+    }
+
+    .sc-points { display: flex; flex-direction: column; gap: 0; }
+
+    .sc-point {
+      display: flex; gap: 20px;
+      padding: 22px 0;
+      border-bottom: 1px solid var(--border);
+      transition: padding .25s;
+    }
+    .sc-point:first-child { border-top: 1px solid var(--border); }
+    .sc-point:hover { padding-left: 8px; }
+
+    .sc-point-icon {
+      width: 34px; height: 34px;
+      border-radius: 8px;
+      background: rgba(201,168,76,.08);
+      border: 1px solid var(--border-gold);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px; flex-shrink: 0;
+      margin-top: 3px;
+      transition: background .25s;
+    }
+    .sc-point:hover .sc-point-icon { background: rgba(201,168,76,.14); }
+
+    .sc-point-h {
+      font-family: var(--serif);
+      font-size: 18px; font-weight: 600;
+      color: var(--white); margin-bottom: 5px;
+    }
+    .sc-point-p {
+      font-size: 13px; font-weight: 300;
+      color: var(--white-3); line-height: 1.65;
+    }
+
+    .sc-explore-link {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 11px; font-weight: 400;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--gold);
+      transition: gap .2s;
+    }
+    .sc-explore-link:hover { gap: 16px; }
+
+    /* Arclight command window — enhanced */
+    .cmd-window {
+      background: var(--black-3);
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow:
+        0 0 0 1px rgba(201,168,76,.05),
+        0 40px 100px rgba(0,0,0,.7),
+        0 0 120px rgba(201,168,76,.04),
+        inset 0 1px 0 rgba(255,255,255,.04);
+    }
+
+    .cmd-topbar {
+      background: var(--black-4);
+      border-bottom: 1px solid rgba(255,255,255,.055);
+      padding: 13px 18px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .cmd-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .cmd-dot.r { background: #FF5F57; }
+    .cmd-dot.a { background: #FEBC2E; }
+    .cmd-dot.g { background: #28C840; }
+    .cmd-title-bar {
+      margin: 0 auto;
+      font-size: 9.5px; letter-spacing: .2em;
+      text-transform: uppercase; color: var(--white-3);
+    }
+    .cmd-shortcut {
+      margin-left: auto; font-size: 10px;
+      color: var(--white-4); letter-spacing: .06em;
+      font-family: monospace;
+    }
+
+    .cmd-body { padding: 20px; }
+
+    .cmd-status-row {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      margin-bottom: 18px;
+    }
+    .cmd-status-label {
+      font-size: 9.5px; letter-spacing: .18em;
+      text-transform: uppercase; color: var(--white-3);
+      margin-bottom: 5px;
+    }
+    .cmd-status-h {
+      font-family: var(--serif);
+      font-size: 20px; font-weight: 600; color: var(--white);
+    }
+    .cmd-live-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 5px 12px;
+      border: 1px solid var(--border-gold);
+      border-radius: 999px;
+      font-size: 9.5px; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--gold);
+      background: rgba(201,168,76,.06);
+    }
+    .live-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--gold);
+      animation: livePulse 2s ease-in-out infinite;
+    }
+    @keyframes livePulse { 0%,100%{opacity:1} 50%{opacity:.25} }
+
+    .cmd-chart-zone {
+      background: var(--black-2);
+      border: 1px solid rgba(255,255,255,.05);
+      border-radius: 10px; padding: 16px; margin-bottom: 12px;
+    }
+    .cmd-chart-meta {
+      display: flex; justify-content: space-between;
+      align-items: flex-end; margin-bottom: 14px;
+    }
+    .cmd-chart-lbl {
+      font-size: 9px; letter-spacing: .18em;
+      text-transform: uppercase; color: var(--white-3);
+    }
+    .cmd-chart-val {
+      font-family: var(--serif);
+      font-size: 30px; font-weight: 600; color: var(--gold); line-height: 1;
+    }
+    .cmd-svg-chart { width: 100%; height: 84px; display: block; overflow: visible; }
+    .cmd-x-axis {
+      display: flex; justify-content: space-between;
+      margin-top: 7px;
+      font-size: 8.5px; letter-spacing: .1em; color: var(--white-3);
+    }
+
+    .cmd-stats-row {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 10px; margin-bottom: 12px;
+    }
+    .cmd-stat {
+      background: var(--black-2);
+      border: 1px solid rgba(255,255,255,.05);
+      border-radius: 8px; padding: 12px 14px;
+    }
+    .cmd-stat-lbl {
+      font-size: 7.5px; letter-spacing: .15em;
+      text-transform: uppercase; color: var(--white-3); margin-bottom: 6px;
+    }
+    .cmd-stat-val {
+      font-family: var(--serif);
+      font-size: 22px; font-weight: 600; color: var(--gold); line-height: 1;
+    }
+    .cmd-stat-trend { font-size: 9px; color: #4ade80; margin-top: 4px; }
+
+    .cmd-bar-zone {
+      background: var(--black-2);
+      border: 1px solid rgba(255,255,255,.05);
+      border-radius: 10px; padding: 14px 16px;
+    }
+    .cmd-bar-top {
+      display: flex; justify-content: space-between;
+      align-items: center; margin-bottom: 14px;
+    }
+    .cmd-bar-lbl {
+      font-size: 8.5px; letter-spacing: .18em;
+      text-transform: uppercase; color: var(--white-3);
+    }
+    .cmd-bar-count { font-size: 8.5px; letter-spacing: .1em; color: var(--gold-dim); }
+    .cmd-bars {
+      display: flex; align-items: flex-end;
+      gap: 4px; height: 48px;
+    }
+    .cmd-bar {
+      flex: 1; border-radius: 2px 2px 0 0;
+      background: linear-gradient(180deg, var(--gold) 0%, var(--gold-dim) 100%);
+      opacity: .65; transition: opacity .2s;
+    }
+    .cmd-bar:hover { opacity: 1; }
+
+    /* ══════════════════════════════════════════════
+       SECTION — CAREER TRACKS
+       Elevated: large cards, bottom gold bar animation,
+       data columns, category labels
+    ══════════════════════════════════════════════ */
+    .tracks-section {
+      padding: 130px 0;
+    }
+
+    .tracks-head {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      gap: 40px;
+      margin-bottom: 64px;
+    }
+    .tracks-head-right {
+      font-size: 13px; font-weight: 300;
+      color: var(--white-3);
+      max-width: 340px;
+      line-height: 1.7;
+      text-align: right;
+    }
+
+    .tracks-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .track-card {
+      background: var(--black-2);
+      border-right: 1px solid var(--border);
+      padding: 40px 32px 36px;
+      display: flex; flex-direction: column;
+      gap: 18px;
+      position: relative;
+      overflow: hidden;
+      transition: background .3s;
+    }
+    .track-card:last-child { border-right: none; }
+    .track-card:hover { background: var(--black-3); }
+
+    /* Bottom gold bar reveal */
+    .track-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      height: 2px; width: 0;
+      background: linear-gradient(90deg, var(--gold), var(--gold-dim));
+      transition: width .4s cubic-bezier(.16,1,.3,1);
+    }
+    .track-card:hover::after { width: 100%; }
+
+    /* Subtle top corner glyph glow */
+    .track-card::before {
+      content: '';
+      position: absolute;
+      top: -30px; right: -30px;
+      width: 100px; height: 100px;
+      background: radial-gradient(circle, rgba(201,168,76,.06) 0%, transparent 70%);
+      pointer-events: none;
+      transition: opacity .3s;
+      opacity: 0;
+    }
+    .track-card:hover::before { opacity: 1; }
+
+    .track-category {
+      font-size: 8.5px; font-weight: 400;
+      letter-spacing: .22em; text-transform: uppercase;
+      color: var(--gold-dim);
+    }
+
+    .track-glyph { font-size: 40px; line-height: 1; }
+
+    .track-name {
+      font-family: var(--serif);
+      font-size: 22px; font-weight: 600;
+      color: var(--white); line-height: 1.15;
+    }
+
+    .track-desc {
+      font-size: 12.5px; font-weight: 300;
+      line-height: 1.65; color: var(--white-3);
+      flex: 1;
+    }
+
+    .track-stats {
+      display: flex; gap: 24px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+      margin-top: auto;
+    }
+    .t-stat { display: flex; flex-direction: column; gap: 3px; }
+    .t-stat-val {
+      font-family: var(--serif);
+      font-size: 22px; font-weight: 600; color: var(--gold); line-height: 1;
+    }
+    .t-stat-lbl {
+      font-size: 8.5px; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--white-3);
+    }
+
+    /* ══════════════════════════════════════════════
+       SECTION — STATISTICS
+       Elevated: full-width dark band, oversized numbers,
+       vertical gold dividers, subtle glow
+    ══════════════════════════════════════════════ */
+    .stats-band {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--black-2);
+      position: relative; overflow: hidden;
+    }
+    .stats-band::before {
+      content: '';
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      width: 800px; height: 240px;
+      background: radial-gradient(ellipse, rgba(201,168,76,.07) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    /* Decorative thin horizontal gold line */
+    .stats-band::after {
+      content: '';
+      position: absolute; top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 500px; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201,168,76,.25), transparent);
+    }
+
+    .stats-inner {
+      max-width: 1280px;
+      margin: 0 auto; padding: 0 40px;
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      position: relative; z-index: 1;
+    }
+
+    .stat-block {
+      padding: 80px 60px 80px 48px;
+      position: relative;
+    }
+    /* Vertical gold divider — Arclight signature */
+    .stat-block + .stat-block::before {
+      content: '';
+      position: absolute;
+      top: 20%; left: 0;
+      width: 1px; height: 60%;
+      background: linear-gradient(180deg, transparent, var(--gold-line), transparent);
+    }
+
+    .stat-ref {
+      font-size: 9px; font-weight: 400;
+      letter-spacing: .2em; text-transform: uppercase;
+      color: var(--gold-dim); margin-bottom: 20px;
+    }
+
+    .stat-num {
+      font-family: var(--serif);
+      font-size: clamp(52px, 6.5vw, 80px);
+      font-weight: 600;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 14px;
+    }
+
+    .stat-label {
+      font-size: 15px; font-weight: 500;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+
+    .stat-note {
+      font-size: 12px; font-weight: 300;
+      letter-spacing: .04em; color: var(--white-3);
+    }
+
+    /* ══════════════════════════════════════════════
+       SECTION — TESTIMONIALS
+       Elevated: serif quotes, author bar with
+       thin divider, hover gold border glow
+    ══════════════════════════════════════════════ */
+    .testi-section { padding: 130px 0; }
+
+    .testi-head {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 40px; align-items: end; margin-bottom: 72px;
+    }
+    .testi-head-right p {
+      font-size: 14px; font-weight: 300;
+      line-height: 1.8; color: var(--white-3);
+      max-width: 380px; margin-left: auto;
+    }
+
+    .testi-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+    }
+
+    .testi-card {
+      background: var(--black-2);
+      border: 1px solid var(--border);
+      border-radius: 14px; padding: 36px 32px;
+      display: flex; flex-direction: column; gap: 24px;
+      position: relative; overflow: hidden;
+      transition: border-color .3s, background .3s;
+    }
+    .testi-card:hover {
+      border-color: var(--border-gold);
+      background: var(--black-3);
+    }
+
+    /* Gold top-left corner accent — Arclight style */
+    .testi-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 40px; height: 1px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      opacity: 0; transition: opacity .3s;
+    }
+    .testi-card:hover::before { opacity: 1; }
+
+    .testi-stars {
+      display: flex; gap: 3px;
+      font-size: 12px; color: var(--gold);
+    }
+
+    .testi-open-quote {
+      font-family: var(--serif);
+      font-size: 48px; line-height: .8;
+      color: var(--gold-line); margin-bottom: -8px;
+    }
+
+    .testi-q {
+      font-family: var(--serif);
+      font-size: 17.5px; font-weight: 400;
+      font-style: italic; line-height: 1.65;
+      color: var(--white-2); flex: 1;
+    }
+
+    .testi-author {
+      display: flex; align-items: center; gap: 14px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+    .testi-av {
+      width: 38px; height: 38px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 600; font-size: 13px; flex-shrink: 0;
+      color: var(--black);
+    }
+    .testi-name {
+      font-size: 13px; font-weight: 500; color: var(--white);
+    }
+    .testi-role {
+      font-size: 11px; font-weight: 300;
+      color: var(--white-3); margin-top: 2px;
+    }
+
+    /* ══════════════════════════════════════════════
+       SECTION — FAQ
+       Elevated: editorial list, open-quote icon,
+       serif questions, smooth height reveal
+    ══════════════════════════════════════════════ */
+    .faq-section { padding: 0 0 130px; }
+
+    .faq-head {
+      text-align: center; margin-bottom: 72px;
+    }
+    .faq-head .sec-tag { justify-content: center; }
+    .faq-head .sec-tag::before { display: none; }
+
+    .faq-wrap { max-width: 720px; margin: 0 auto; }
+
+    .faq-item { border-bottom: 1px solid var(--border); }
+    .faq-item:first-child { border-top: 1px solid var(--border); }
+
+    .faq-btn {
+      width: 100%;
+      display: flex; align-items: flex-start;
+      justify-content: space-between;
+      padding: 24px 0; background: none; border: none;
+      cursor: pointer; text-align: left; gap: 28px;
+    }
+
+    .faq-q-text {
+      font-family: var(--serif);
+      font-size: 19px; font-weight: 500;
+      color: var(--white); line-height: 1.3;
+      transition: color .2s;
+    }
+    .faq-btn:hover .faq-q-text { color: var(--gold-light); }
+
+    .faq-icon {
+      width: 24px; height: 24px;
+      border: 1px solid var(--border-gold);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold); font-size: 15px; line-height: 1;
+      flex-shrink: 0; margin-top: 2px;
+      transition: transform .35s cubic-bezier(.16,1,.3,1),
+                  background .25s, border-color .25s;
+    }
+    .faq-item.open .faq-icon {
+      transform: rotate(45deg);
+      background: rgba(201,168,76,.1);
+      border-color: var(--border-gold-2);
+    }
+
+    .faq-answer {
+      max-height: 0; overflow: hidden;
+      transition: max-height .4s cubic-bezier(.16,1,.3,1);
+    }
+    .faq-item.open .faq-answer { max-height: 400px; }
+
+    .faq-ans-inner {
+      font-size: 14px; font-weight: 300;
+      line-height: 1.8; color: var(--white-3);
+      padding-bottom: 24px;
+    }
+
+    /* ══════════════════════════════════════════════
+       SECTION — FINAL CTA
+       Elevated: oversized serif, radial glow,
+       decorative lines, tight premium layout
+    ══════════════════════════════════════════════ */
+    .cta-section {
+      padding: 160px 40px;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute; top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 900px; height: 500px;
+      background: radial-gradient(ellipse at top,
+        rgba(201,168,76,.13) 0%,
+        transparent 60%);
+      pointer-events: none;
+    }
+    /* decorative horizontal lines */
+    .cta-section::after {
+      content: '';
+      position: absolute; top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 600px; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201,168,76,.2), transparent);
+    }
+
+    .cta-inner {
+      position: relative; max-width: 680px; margin: 0 auto;
+    }
+
+    .cta-file-line {
+      display: flex; align-items: center; gap: 16px;
+      justify-content: center; margin-bottom: 40px;
+      font-size: 10px; font-weight: 400;
+      letter-spacing: .22em; text-transform: uppercase;
+      color: var(--gold-dim);
+    }
+    .cta-file-line::before, .cta-file-line::after {
+      content: ''; display: block; flex: 1;
+      max-width: 80px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-line));
+    }
+    .cta-file-line::after { background: linear-gradient(90deg, var(--gold-line), transparent); }
+
+    .cta-h {
+      font-family: var(--serif);
+      font-size: clamp(42px, 6vw, 76px);
+      font-weight: 600; line-height: 1.06;
+      color: var(--white); margin-bottom: 22px;
+    }
+    .cta-h em { font-style: italic; color: var(--gold); }
+
+    .cta-sub {
+      font-size: 15px; font-weight: 300;
+      line-height: 1.8; color: var(--white-2);
+      margin-bottom: 44px; max-width: 520px;
+      margin-left: auto; margin-right: auto;
+    }
+
+    .cta-btns {
+      display: flex; gap: 14px;
+      justify-content: center; flex-wrap: wrap;
+    }
+
+    .cta-fine {
+      margin-top: 28px;
+      font-size: 12px; font-weight: 300; color: var(--white-3);
+    }
+    .cta-fine a { color: var(--gold); transition: color .2s; }
+    .cta-fine a:hover { color: var(--gold-light); }
+
+    /* ══════════════════════════════════════════════
+       FOOTER
+       Elevated: editorial grid, brand story,
+       thin gold social icons, precise type scale
+    ══════════════════════════════════════════════ */
+    .site-footer {
+      border-top: 1px solid var(--border);
+      background: var(--black-2);
+    }
+
+    .footer-top {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 80px 40px 64px;
+      display: grid;
+      grid-template-columns: 2.2fr 1fr 1fr 1fr 1fr;
+      gap: 56px;
+    }
+
+    .footer-brand { display: flex; flex-direction: column; gap: 18px; }
+
+    .footer-brand-wordmark {
+      font-family: var(--sans);
+      font-size: 13px; font-weight: 500;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: var(--white);
+    }
+    .footer-brand-wordmark em { font-style: normal; color: var(--gold); }
+
+    .footer-tagline {
+      font-size: 13px; font-weight: 300;
+      line-height: 1.75; color: var(--white-3);
+      max-width: 260px;
+    }
+
+    .footer-socials { display: flex; gap: 8px; }
+
+    .footer-soc {
+      width: 32px; height: 32px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; color: var(--white-3);
+      transition: border-color .2s, color .2s, background .2s;
+    }
+    .footer-soc:hover {
+      border-color: var(--border-gold);
+      color: var(--gold);
+      background: var(--gold-glow-2);
+    }
+
+    .footer-col h4 {
+      font-size: 9.5px; font-weight: 500;
+      letter-spacing: .2em; text-transform: uppercase;
+      color: var(--white); margin-bottom: 22px;
+    }
+
+    .footer-links {
+      display: flex; flex-direction: column; gap: 13px;
+    }
+    .footer-links a {
+      font-size: 13px; font-weight: 300; color: var(--white-3);
+      transition: color .2s;
+    }
+    .footer-links a:hover { color: var(--gold); }
+
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+    }
+    .footer-bottom-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 20px 40px;
+      display: flex; align-items: center;
+      justify-content: space-between; flex-wrap: wrap; gap: 12px;
+    }
+
+    .footer-copy {
+      font-size: 11.5px; font-weight: 300; color: var(--white-4);
+    }
+
+    .footer-legal {
+      display: flex; gap: 28px;
+    }
+    .footer-legal a {
+      font-size: 11.5px; font-weight: 300;
+      color: var(--white-4); transition: color .2s;
+    }
+    .footer-legal a:hover { color: var(--gold); }
+
+    /* ══════════════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════════════ */
+    @media (max-width: 1024px) {
+      .hdr-nav, .hdr-signin { display: none; }
+      .hdr-menu-btn { display: flex; }
+      .feat-head { grid-template-columns: 1fr; }
+      .feat-head-right p { margin-left: 0; }
+      .feat-head-link { margin-left: 0; }
+      .feat-grid { grid-template-columns: repeat(2, 1fr); }
+      .showcase-inner { grid-template-columns: 1fr; padding: 80px 40px; }
+      .cmd-window { display: none; }
+      .tracks-head { grid-template-columns: 1fr; }
+      .tracks-head-right { text-align: left; max-width: 100%; }
+      .tracks-grid { grid-template-columns: repeat(2, 1fr); }
+      .track-card { border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+      .testi-head { grid-template-columns: 1fr; }
+      .testi-head-right p { margin-left: 0; }
+      .testi-grid { grid-template-columns: repeat(2, 1fr); }
+      .stats-inner { grid-template-columns: 1fr; }
+      .stat-block { padding: 60px 40px; }
+      .stat-block + .stat-block::before {
+        width: 80%; height: 1px;
+        top: 0; left: 10%;
+        background: linear-gradient(90deg, transparent, var(--gold-line), transparent);
+      }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+      .cmd-stats-row { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 640px) {
+      .site-header { padding: 0 20px; }
+      .hero { padding: 120px 24px 80px; }
+      .wrap { padding-left: 24px; padding-right: 24px; }
+      .feat-section, .testi-section, .tracks-section { padding: 80px 0; }
+      .feat-grid { grid-template-columns: 1fr; }
+      .feat-cell { padding: 36px 28px; }
+      .showcase-inner { padding: 80px 24px; }
+      .tracks-grid { grid-template-columns: 1fr; }
+      .track-card { border-right: none; }
+      .testi-grid { grid-template-columns: 1fr; }
+      .cta-section { padding: 100px 24px; }
+      .site-footer { padding: 0; }
+      .footer-top { padding: 56px 24px 48px; grid-template-columns: 1fr; gap: 28px; }
+      .footer-bottom-inner { padding: 20px 24px; flex-direction: column; text-align: center; }
+      .footer-legal { justify-content: center; }
+      .trusted-logo-item { padding: 12px 20px; }
+      .faq-section { padding: 0 0 80px; }
+    }
+
+    .sr-only {
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     HEADER
+══════════════════════════════════════════════════ -->
+<header class="site-header" role="banner" aria-label="Main navigation">
+  <div class="hdr-left">
+    <div class="hdr-logo-mark" aria-hidden="true">
+      <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 12L8 4L13 12" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M5.5 9.5L10.5 9.5" stroke="#C9A84C" stroke-width="1.2" stroke-linecap="round"/>
+        <circle cx="8" cy="4" r="1.2" fill="#C9A84C"/>
+      </svg>
+    </div>
+    <span class="hdr-brand">CareerLaunch</span>
+  </div>
+
+  <nav class="hdr-nav" aria-label="Primary navigation">
+    <a href="#features">Platform</a>
+    <a href="#showcase">Showcase</a>
+    <a href="#tracks">Tracks</a>
+    <a href="#faq">FAQ</a>
+  </nav>
+
+  <div class="hdr-right">
+    <a href="dashboard.html" class="hdr-signin">Sign In</a>
+    <a href="dashboard.html" class="btn-access">Request Access</a>
+    <button class="hdr-menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileDrawer">
+      <svg width="22" height="14" viewBox="0 0 22 14" fill="none" aria-hidden="true">
+        <path d="M0 1h22M0 7h22M0 13h22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile Drawer -->
+<div class="drawer-bg" id="drawerBg" aria-hidden="true"></div>
+<nav class="drawer" id="mobileDrawer" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Mobile navigation">
+  <div class="drawer-header">
+    <span class="hdr-brand">CareerLaunch <span style="color:var(--gold)">AI</span></span>
+    <button class="drawer-close" id="drawerClose" aria-label="Close menu">&#10005;</button>
+  </div>
+  <div class="drawer-nav">
+    <a href="#features"  onclick="closeNav()">Platform</a>
+    <a href="#showcase"  onclick="closeNav()">Showcase</a>
+    <a href="#tracks"    onclick="closeNav()">Tracks</a>
+    <a href="#testimonials" onclick="closeNav()">Stories</a>
+    <a href="#faq"       onclick="closeNav()">FAQ</a>
+  </div>
+  <div class="drawer-cta">
+    <a href="dashboard.html" class="btn-access">Request Access</a>
+  </div>
+</nav>
+
+
+<!-- ══════════════════════════════════════════════
+     1. HERO  (approved — preserved as-is)
+══════════════════════════════════════════════════ -->
+<main id="main">
+<section class="hero" aria-label="Hero — Product introduction">
+
+  <div class="hero-file-tag" aria-hidden="true">
+    CAREERLAUNCH &middot; AI &middot; 2024
+  </div>
+
+  <h1 class="hero-h1 reveal">
+    Track your career like<br/>
+    <em>a first-class mission.</em>
+  </h1>
+
+  <p class="hero-sub reveal reveal-d1">
+    CareerLaunch AI unifies your skills, projects, internship pipeline,
+    and career analytics into one command&nbsp;center built for the ambitious student.
+  </p>
+
+  <div class="hero-cta reveal reveal-d2">
+    <a href="dashboard.html" class="btn-hero-main" aria-label="Open dashboard — free">
+      Get Started Free &nbsp;→
+    </a>
+    <a href="#showcase" class="btn-watch">
+      <span class="btn-watch-icon" aria-hidden="true">▶</span>
+      See the dashboard
+    </a>
+  </div>
+
+  <div class="hero-trust reveal reveal-d3" role="group" aria-label="Platform trust signals">
+    <div class="trust-pill"><strong>Students</strong> · 5,000+</div>
+    <div class="trust-pill"><strong>Success Rate</strong> · 92%</div>
+    <div class="trust-pill"><strong>Time to Interview</strong> · 14 Days</div>
+  </div>
+
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     2. TRUSTED BY
+══════════════════════════════════════════════════ -->
+<section class="trusted-band" aria-label="Trusted by students at leading institutions">
+  <div class="trusted-inner">
+    <div class="trusted-row">
+      <p class="trusted-label">Trusted by students at</p>
+    </div>
+    <div class="trusted-logos reveal" role="list">
+      <div class="trusted-logo-item" role="listitem">
+        <span class="trusted-logo-name">MIT</span>
+      </div>
+      <div class="trusted-logo-item" role="listitem">
+        <span class="trusted-logo-name">Stanford</span>
+      </div>
+      <div class="trusted-logo-item" role="listitem">
+        <span class="trusted-logo-name">IIT Delhi</span>
+      </div>
+      <div class="trusted-logo-item" role="listitem">
+        <span class="trusted-logo-name">UC Berkeley</span>
+      </div>
+      <div class="trusted-logo-item" role="listitem">
+        <span class="trusted-logo-name">NIT Nagpur</span>
+      </div>
+      <div class="trusted-logo-item" role="listitem">
+        <span class="trusted-logo-name">Scrimba</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     3. FEATURES
+══════════════════════════════════════════════════ -->
+<section class="feat-section" id="features" aria-labelledby="feat-title">
+  <div class="wrap">
+
+    <div class="feat-head reveal">
+      <div class="feat-head-left">
+        <span class="sec-tag">Platform Modules</span>
+        <h2 class="sec-title" id="feat-title">
+          Six tools. One<br/><em>command centre.</em>
+        </h2>
+      </div>
+      <div class="feat-head-right">
+        <p>Every capability you need to go from zero to hired — built into one unified, premium dashboard.</p>
+        <a href="dashboard.html" class="feat-head-link">Explore platform →</a>
+      </div>
+    </div>
+
+    <div class="feat-grid">
+
+      <article class="feat-cell reveal reveal-d1" data-num="01" aria-label="Skill Roadmap">
+        <p class="feat-num-label">01 · Skill Roadmap</p>
+        <div class="feat-icon-box" aria-hidden="true">🗺️</div>
+        <h3 class="feat-cell-title">Visual Skill<br/>Roadmap</h3>
+        <p class="feat-cell-desc">Map your entire learning journey with categorised skill trees. Track progress from Beginner to Expert with milestones and curated resources.</p>
+      </article>
+
+      <article class="feat-cell reveal reveal-d2" data-num="02" aria-label="Internship Tracker">
+        <p class="feat-num-label">02 · Internship Tracker</p>
+        <div class="feat-icon-box" aria-hidden="true">💼</div>
+        <h3 class="feat-cell-title">Internship<br/>Pipeline</h3>
+        <p class="feat-cell-desc">Never lose track of an application. Manage your entire pipeline from Applied to Offer with a kanban board built for the job hunt.</p>
+      </article>
+
+      <article class="feat-cell reveal reveal-d3" data-num="03" aria-label="Projects Portfolio">
+        <p class="feat-num-label">03 · Projects</p>
+        <div class="feat-icon-box" aria-hidden="true">📁</div>
+        <h3 class="feat-cell-title">Portfolio<br/>Tracker</h3>
+        <p class="feat-cell-desc">Showcase your work with a beautifully organised project tracker. Link GitHub repos, live demos, and tag the skills each project demonstrates.</p>
+      </article>
+
+      <article class="feat-cell reveal reveal-d4" data-num="04" aria-label="Career Analytics">
+        <p class="feat-num-label">04 · Analytics</p>
+        <div class="feat-icon-box" aria-hidden="true">📊</div>
+        <h3 class="feat-cell-title">Career<br/>Analytics</h3>
+        <p class="feat-cell-desc">Deep insights into your growth. Visualise learning consistency, skill progression, and application funnel performance through rich charts.</p>
+      </article>
+
+      <article class="feat-cell reveal reveal-d5" data-num="05" aria-label="AI Recommendations">
+        <p class="feat-num-label">05 · AI Assist</p>
+        <div class="feat-icon-box" aria-hidden="true">🤖</div>
+        <h3 class="feat-cell-title">Smart<br/>Recommendations</h3>
+        <p class="feat-cell-desc">Personalised next-step suggestions based on your current skills, job goals, and activity history. Always know exactly what to do next.</p>
+      </article>
+
+      <article class="feat-cell reveal reveal-d6" data-num="06" aria-label="Profile & Export">
+        <p class="feat-num-label">06 · Profile</p>
+        <div class="feat-icon-box" aria-hidden="true">👤</div>
+        <h3 class="feat-cell-title">Profile<br/>&amp; Export</h3>
+        <p class="feat-cell-desc">Build a career profile linking GitHub and LinkedIn. Export your full dataset anytime — your data, your control, always portable.</p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     4. DASHBOARD SHOWCASE
+══════════════════════════════════════════════════ -->
+<section class="showcase-band" id="showcase" aria-labelledby="showcase-title">
+  <div class="showcase-inner">
+
+    <div class="showcase-left reveal">
+      <div>
+        <span class="sec-tag">Product Showcase</span>
+        <h2 class="sec-title" id="showcase-title">
+          Your complete career<br/><em>command centre.</em>
+        </h2>
+      </div>
+      <p style="font-size:14px;font-weight:300;line-height:1.8;color:var(--white-2);max-width:400px;">
+        The CareerLaunch AI dashboard consolidates everything you need to accelerate your career into a single, elegant interface — modelled on the tools professionals use every day.
+      </p>
+      <div class="sc-points">
+        <div class="sc-point">
+          <div class="sc-point-icon" aria-hidden="true">📈</div>
+          <div>
+            <p class="sc-point-h">Real-Time Career Score</p>
+            <p class="sc-point-p">A composite metric combining skills, projects, application activity, and interview readiness into a single number.</p>
+          </div>
+        </div>
+        <div class="sc-point">
+          <div class="sc-point-icon" aria-hidden="true">⚡</div>
+          <div>
+            <p class="sc-point-h">At-a-Glance Pipeline</p>
+            <p class="sc-point-p">See every internship application stage at a single glance so you never miss a follow-up or deadline.</p>
+          </div>
+        </div>
+        <div class="sc-point">
+          <div class="sc-point-icon" aria-hidden="true">🧠</div>
+          <div>
+            <p class="sc-point-h">AI-Powered Next Steps</p>
+            <p class="sc-point-p">Daily actionable recommendations tailored to your career goals and current skill profile.</p>
+          </div>
+        </div>
+      </div>
+      <a href="dashboard.html" class="sc-explore-link">Explore Dashboard →</a>
+    </div>
+
+    <!-- Command window — Arclight style -->
+    <div class="reveal reveal-d2" aria-hidden="true">
+      <div class="cmd-window">
+        <div class="cmd-topbar">
+          <span class="cmd-dot r"></span>
+          <span class="cmd-dot a"></span>
+          <span class="cmd-dot g"></span>
+          <span class="cmd-title-bar">CAREERLAUNCH &middot; COMMAND</span>
+          <span class="cmd-shortcut">⌘K</span>
+        </div>
+        <div class="cmd-body">
+          <div class="cmd-status-row">
+            <div>
+              <p class="cmd-status-label">Career Status &middot; This Month</p>
+              <p class="cmd-status-h">All systems &middot; <span style="color:var(--gold)">nominal</span></p>
+            </div>
+            <div class="cmd-live-badge">
+              <span class="live-dot"></span>LIVE
+            </div>
+          </div>
+
+          <div class="cmd-chart-zone">
+            <div class="cmd-chart-meta">
+              <span class="cmd-chart-lbl">CAREER GROWTH &middot; TRAILING 6 MONTHS</span>
+              <span class="cmd-chart-val">78</span>
+            </div>
+            <svg class="cmd-svg-chart" viewBox="0 0 400 84" preserveAspectRatio="none" role="img" aria-label="Career growth line chart showing upward trend">
+              <defs>
+                <linearGradient id="goldFill" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#C9A84C" stop-opacity=".32"/>
+                  <stop offset="100%" stop-color="#C9A84C" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <path d="M0,72 L45,62 L90,58 L135,54 L180,47 L225,41 L270,36 L315,26 L360,16 L400,6 L400,84 L0,84 Z" fill="url(#goldFill)"/>
+              <path d="M0,72 L45,62 L90,58 L135,54 L180,47 L225,41 L270,36 L315,26 L360,16 L400,6" fill="none" stroke="#C9A84C" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+              <circle cx="400" cy="6" r="4" fill="#C9A84C"/>
+              <circle cx="400" cy="6" r="8" fill="#C9A84C" fill-opacity=".18"/>
+            </svg>
+            <div class="cmd-x-axis">
+              <span>JAN</span><span>FEB</span><span>MAR</span><span>APR</span><span>MAY</span><span>NOW</span>
+            </div>
+          </div>
+
+          <div class="cmd-stats-row">
+            <div class="cmd-stat">
+              <p class="cmd-stat-lbl">Resume Score</p>
+              <p class="cmd-stat-val">72</p>
+              <p class="cmd-stat-trend">↑ +8 pts</p>
+            </div>
+            <div class="cmd-stat">
+              <p class="cmd-stat-lbl">Interview Ready</p>
+              <p class="cmd-stat-val">85%</p>
+              <p class="cmd-stat-trend">↑ +12%</p>
+            </div>
+            <div class="cmd-stat">
+              <p class="cmd-stat-lbl">Projects</p>
+              <p class="cmd-stat-val">4</p>
+              <p class="cmd-stat-trend">↑ +2</p>
+            </div>
+            <div class="cmd-stat">
+              <p class="cmd-stat-lbl">Career Score</p>
+              <p class="cmd-stat-val">78</p>
+              <p class="cmd-stat-trend">↑ +5 pts</p>
+            </div>
+          </div>
+
+          <div class="cmd-bar-zone">
+            <div class="cmd-bar-top">
+              <span class="cmd-bar-lbl">SKILLS &middot; PER CATEGORY</span>
+              <span class="cmd-bar-count">6 CATEGORIES</span>
+            </div>
+            <div class="cmd-bars" role="img" aria-label="Skills per category bar chart">
+              <div class="cmd-bar" style="height:65%"></div>
+              <div class="cmd-bar" style="height:80%"></div>
+              <div class="cmd-bar" style="height:45%"></div>
+              <div class="cmd-bar" style="height:92%"></div>
+              <div class="cmd-bar" style="height:55%"></div>
+              <div class="cmd-bar" style="height:70%"></div>
+              <div class="cmd-bar" style="height:38%"></div>
+              <div class="cmd-bar" style="height:60%"></div>
+              <div class="cmd-bar" style="height:85%"></div>
+              <div class="cmd-bar" style="height:50%"></div>
+              <div class="cmd-bar" style="height:75%"></div>
+              <div class="cmd-bar" style="height:42%"></div>
+              <div class="cmd-bar" style="height:88%"></div>
+              <div class="cmd-bar" style="height:63%"></div>
+              <div class="cmd-bar" style="height:95%"></div>
+              <div class="cmd-bar" style="height:48%"></div>
+              <div class="cmd-bar" style="height:72%"></div>
+              <div class="cmd-bar" style="height:56%"></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     5. CAREER TRACKS
+══════════════════════════════════════════════════ -->
+<section class="tracks-section" id="tracks" aria-labelledby="tracks-title">
+  <div class="wrap">
+    <div class="tracks-head reveal">
+      <div>
+        <span class="sec-tag">Career Paths</span>
+        <h2 class="sec-title" id="tracks-title">
+          Choose your<br/><em>career track.</em>
+        </h2>
+      </div>
+      <p class="tracks-head-right">
+        Curated roadmaps across four high-demand disciplines. Pick your path and follow a structured journey from zero to job-ready.
+      </p>
+    </div>
+
+    <div class="tracks-grid">
+
+      <article class="track-card reveal reveal-d1" aria-label="Frontend Development track">
+        <p class="track-category">Track 01</p>
+        <div class="track-glyph" aria-hidden="true">🖥️</div>
+        <h3 class="track-name">Frontend<br/>Development</h3>
+        <p class="track-desc">HTML, CSS, JavaScript, React, Next.js &amp; the full modern web stack.</p>
+        <div class="track-stats" role="group" aria-label="Track statistics">
+          <div class="t-stat">
+            <span class="t-stat-val">8</span>
+            <span class="t-stat-lbl">Skills</span>
+          </div>
+          <div class="t-stat">
+            <span class="t-stat-val">12</span>
+            <span class="t-stat-lbl">Projects</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="track-card reveal reveal-d2" aria-label="Backend Development track">
+        <p class="track-category">Track 02</p>
+        <div class="track-glyph" aria-hidden="true">⚙️</div>
+        <h3 class="track-name">Backend<br/>Development</h3>
+        <p class="track-desc">Node.js, Express, SQL, NoSQL, REST APIs &amp; microservices architecture.</p>
+        <div class="track-stats" role="group" aria-label="Track statistics">
+          <div class="t-stat">
+            <span class="t-stat-val">10</span>
+            <span class="t-stat-lbl">Skills</span>
+          </div>
+          <div class="t-stat">
+            <span class="t-stat-val">15</span>
+            <span class="t-stat-lbl">Projects</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="track-card reveal reveal-d3" aria-label="UI/UX Design track">
+        <p class="track-category">Track 03</p>
+        <div class="track-glyph" aria-hidden="true">🎨</div>
+        <h3 class="track-name">UI/UX<br/>Design</h3>
+        <p class="track-desc">Figma, design systems, prototyping, user research &amp; accessibility.</p>
+        <div class="track-stats" role="group" aria-label="Track statistics">
+          <div class="t-stat">
+            <span class="t-stat-val">6</span>
+            <span class="t-stat-lbl">Skills</span>
+          </div>
+          <div class="t-stat">
+            <span class="t-stat-val">10</span>
+            <span class="t-stat-lbl">Projects</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="track-card reveal reveal-d4" aria-label="DevOps & Cloud track">
+        <p class="track-category">Track 04</p>
+        <div class="track-glyph" aria-hidden="true">☁️</div>
+        <h3 class="track-name">DevOps<br/>&amp; Cloud</h3>
+        <p class="track-desc">Docker, CI/CD pipelines, AWS, Kubernetes &amp; infrastructure as code.</p>
+        <div class="track-stats" role="group" aria-label="Track statistics">
+          <div class="t-stat">
+            <span class="t-stat-val">7</span>
+            <span class="t-stat-lbl">Skills</span>
+          </div>
+          <div class="t-stat">
+            <span class="t-stat-val">8</span>
+            <span class="t-stat-lbl">Projects</span>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     6. STATISTICS
+══════════════════════════════════════════════════ -->
+<section class="stats-band" aria-labelledby="stats-title">
+  <h2 class="sr-only" id="stats-title">Platform statistics</h2>
+  <div class="stats-inner" role="list">
+
+    <div class="stat-block reveal" role="listitem">
+      <p class="stat-ref">METRIC 01 &middot; REACH</p>
+      <p class="stat-num" aria-label="5,000 plus active students">5,000+</p>
+      <p class="stat-label">Active Students</p>
+      <p class="stat-note">Across 30+ countries worldwide</p>
+    </div>
+
+    <div class="stat-block reveal reveal-d2" role="listitem">
+      <p class="stat-ref">METRIC 02 &middot; OUTCOME</p>
+      <p class="stat-num" aria-label="92 percent interview success rate">92%</p>
+      <p class="stat-label">Interview Success Rate</p>
+      <p class="stat-note">Among users who complete a full track</p>
+    </div>
+
+    <div class="stat-block reveal reveal-d4" role="listitem">
+      <p class="stat-ref">METRIC 03 &middot; VELOCITY</p>
+      <p class="stat-num" aria-label="14 days average to first interview">14 Days</p>
+      <p class="stat-label">Average to First Interview</p>
+      <p class="stat-note">From profile creation to first call</p>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     7. TESTIMONIALS
+══════════════════════════════════════════════════ -->
+<section class="testi-section" id="testimonials" aria-labelledby="testi-title">
+  <div class="wrap">
+
+    <div class="testi-head reveal">
+      <div>
+        <span class="sec-tag">Student Stories</span>
+        <h2 class="sec-title" id="testi-title">
+          Real results from<br/><em>real students.</em>
+        </h2>
+      </div>
+      <div class="testi-head-right">
+        <p>Hear from students who used CareerLaunch AI to land their dream internships and accelerate their tech careers.</p>
+      </div>
+    </div>
+
+    <div class="testi-grid">
+
+      <article class="testi-card reveal reveal-d1" aria-label="Testimonial from Aditya Kumar">
+        <div class="testi-stars" aria-label="5 out of 5 stars" role="img">★★★★★</div>
+        <p class="testi-open-quote" aria-hidden="true">"</p>
+        <blockquote class="testi-q">
+          CareerLaunch AI completely transformed how I approached my job search. The skill roadmap helped me identify exactly what I was missing, and the internship tracker kept me organised across 20+ applications.
+        </blockquote>
+        <div class="testi-author">
+          <div class="testi-av" style="background:var(--gold)" aria-hidden="true">AK</div>
+          <div>
+            <p class="testi-name">Aditya Kumar</p>
+            <p class="testi-role">SWE Intern @ Google &mdash; IIT Delhi, 2024</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="testi-card reveal reveal-d2" aria-label="Testimonial from Sarah Rodriguez">
+        <div class="testi-stars" aria-label="5 out of 5 stars" role="img">★★★★★</div>
+        <p class="testi-open-quote" aria-hidden="true">"</p>
+        <blockquote class="testi-q">
+          The analytics page was a game-changer. I could literally see my learning consistency increasing week by week. It kept me motivated and accountable through the entire grind.
+        </blockquote>
+        <div class="testi-author">
+          <div class="testi-av" style="background:#3B82F6;color:#fff" aria-hidden="true">SR</div>
+          <div>
+            <p class="testi-name">Sarah Rodriguez</p>
+            <p class="testi-role">Frontend Dev @ Stripe &mdash; UC Berkeley, 2024</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="testi-card reveal reveal-d3" aria-label="Testimonial from Priya Mehta">
+        <div class="testi-stars" aria-label="5 out of 5 stars" role="img">★★★★★</div>
+        <p class="testi-open-quote" aria-hidden="true">"</p>
+        <blockquote class="testi-q">
+          I went from zero internship experience to three offers in 6 weeks. The project tracker helped me articulate my work clearly during interviews — that made all the difference.
+        </blockquote>
+        <div class="testi-author">
+          <div class="testi-av" style="background:#10B981;color:#fff" aria-hidden="true">PM</div>
+          <div>
+            <p class="testi-name">Priya Mehta</p>
+            <p class="testi-role">Product Design Intern @ Figma &mdash; NIT, 2024</p>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     8. FAQ
+══════════════════════════════════════════════════ -->
+<section class="faq-section" id="faq" aria-labelledby="faq-title">
+  <div class="wrap">
+
+    <div class="faq-head reveal">
+      <span class="sec-tag">FAQ</span>
+      <h2 class="sec-title" id="faq-title">
+        Frequently asked<br/><em>questions.</em>
+      </h2>
+    </div>
+
+    <div class="faq-wrap" role="list">
+
+      <div class="faq-item open reveal" role="listitem">
+        <button class="faq-btn" aria-expanded="true" aria-controls="fa1" id="fq1">
+          <span class="faq-q-text">How does CareerLaunch AI work?</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-answer" id="fa1" role="region" aria-labelledby="fq1">
+          <p class="faq-ans-inner">CareerLaunch AI is a browser-based career dashboard. Sample data loads on first visit so you can explore immediately. Personalise it with your own skills, projects, and applications. Everything is stored locally in your browser — no account or server required.</p>
+        </div>
+      </div>
+
+      <div class="faq-item reveal reveal-d1" role="listitem">
+        <button class="faq-btn" aria-expanded="false" aria-controls="fa2" id="fq2">
+          <span class="faq-q-text">Is my data stored on a server?</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-answer" id="fa2" role="region" aria-labelledby="fq2">
+          <p class="faq-ans-inner">No. CareerLaunch AI uses your browser's LocalStorage. Nothing is sent to any external server. Your skills, projects, and application data live entirely on your device — full privacy, full control.</p>
+        </div>
+      </div>
+
+      <div class="faq-item reveal reveal-d2" role="listitem">
+        <button class="faq-btn" aria-expanded="false" aria-controls="fa3" id="fq3">
+          <span class="faq-q-text">Can I export my data?</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-answer" id="fa3" role="region" aria-labelledby="fq3">
+          <p class="faq-ans-inner">Yes. The Profile page includes a one-click export that downloads all your data as JSON. Import that file on any device to restore everything instantly.</p>
+        </div>
+      </div>
+
+      <div class="faq-item reveal reveal-d3" role="listitem">
+        <button class="faq-btn" aria-expanded="false" aria-controls="fa4" id="fq4">
+          <span class="faq-q-text">Which browsers and devices are supported?</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-answer" id="fa4" role="region" aria-labelledby="fq4">
+          <p class="faq-ans-inner">CareerLaunch AI works in all modern browsers — Chrome, Firefox, Safari, and Edge. It's fully responsive for desktop, tablet, and mobile. No installation required.</p>
+        </div>
+      </div>
+
+      <div class="faq-item reveal reveal-d4" role="listitem">
+        <button class="faq-btn" aria-expanded="false" aria-controls="fa5" id="fq5">
+          <span class="faq-q-text">Is CareerLaunch AI free to use?</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-answer" id="fa5" role="region" aria-labelledby="fq5">
+          <p class="faq-ans-inner">Yes — completely free. No subscriptions, no credit card, no hidden costs. CareerLaunch AI is built to help students succeed in their career journey.</p>
+        </div>
+      </div>
+
+      <div class="faq-item reveal reveal-d5" role="listitem">
+        <button class="faq-btn" aria-expanded="false" aria-controls="fa6" id="fq6">
+          <span class="faq-q-text">Can I connect my GitHub or LinkedIn?</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-answer" id="fa6" role="region" aria-labelledby="fq6">
+          <p class="faq-ans-inner">Yes. On the Profile page you can add your GitHub and LinkedIn URLs. These are stored as profile links. Full OAuth integration is planned for a future release.</p>
+        </div>
+      </div>
+
+      <div class="faq-item reveal reveal-d6" role="listitem">
+        <button class="faq-btn" aria-expanded="false" aria-controls="fa7" id="fq7">
+          <span class="faq-q-text">How is my Career Score calculated?</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-answer" id="fa7" role="region" aria-labelledby="fq7">
+          <p class="faq-ans-inner">Your Career Score is a weighted composite: skill proficiency (40%), project completion (25%), application activity (25%), and learning consistency (10%). It updates dynamically as you add data.</p>
+        </div>
+      </div>
+
+      <div class="faq-item reveal reveal-d6" role="listitem">
+        <button class="faq-btn" aria-expanded="false" aria-controls="fa8" id="fq8">
+          <span class="faq-q-text">What makes this different from a spreadsheet?</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-answer" id="fa8" role="region" aria-labelledby="fq8">
+          <p class="faq-ans-inner">A spreadsheet is static. CareerLaunch AI is active, visual, and intelligent — surfacing trends, giving you AI recommendations, visualising your pipeline, and keeping you motivated through streaks and analytics.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     9. FINAL CTA
+══════════════════════════════════════════════════ -->
+<section class="cta-section" aria-labelledby="cta-title">
+  <div class="cta-inner">
+    <div class="cta-file-line reveal" aria-hidden="true">
+      LAUNCH YOUR CAREER
+    </div>
+    <h2 class="cta-h reveal reveal-d1" id="cta-title">
+      Ready to launch your<br/><em>tech career?</em>
+    </h2>
+    <p class="cta-sub reveal reveal-d2">
+      Join 5,000+ students who stopped guessing and started building the career they deserve. No sign-up. No credit card. Just open and go.
+    </p>
+    <div class="cta-btns reveal reveal-d3">
+      <a href="dashboard.html" class="btn-hero-main" aria-label="Open the dashboard for free">
+        Open Dashboard — It's Free
+      </a>
+      <a href="#features" class="btn-watch">
+        <span class="btn-watch-icon" aria-hidden="true">▶</span>
+        Explore Features
+      </a>
+    </div>
+    <p class="cta-fine reveal reveal-d4">
+      Already on another device? <a href="#">Import your data →</a>
+    </p>
+  </div>
+</section>
+
+</main>
+
+
+<!-- ══════════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════════ -->
+<footer class="site-footer" role="contentinfo" aria-label="Site footer">
+  <div class="footer-top">
+
+    <div class="footer-brand">
+      <p class="footer-brand-wordmark">CareerLaunch <em>AI</em></p>
+      <p class="footer-tagline">The premium career development platform for ambitious students who want to land their dream tech role — faster.</p>
+      <div class="footer-socials" aria-label="Social media links">
+        <a href="#" class="footer-soc" aria-label="Twitter / X">𝕏</a>
+        <a href="#" class="footer-soc" aria-label="GitHub">⌥</a>
+        <a href="#" class="footer-soc" aria-label="LinkedIn">in</a>
+        <a href="#" class="footer-soc" aria-label="Discord">◈</a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h4>Product</h4>
+      <nav class="footer-links" aria-label="Product links">
+        <a href="#features">Features</a>
+        <a href="#showcase">Dashboard</a>
+        <a href="#tracks">Career Tracks</a>
+        <a href="#faq">FAQ</a>
+        <a href="analytics.html">Analytics</a>
+      </nav>
+    </div>
+
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <nav class="footer-links" aria-label="Resource links">
+        <a href="#">Documentation</a>
+        <a href="#">Blog</a>
+        <a href="#">Guides</a>
+        <a href="#">Community</a>
+        <a href="#">Changelog</a>
+      </nav>
+    </div>
+
+    <div class="footer-col">
+      <h4>Company</h4>
+      <nav class="footer-links" aria-label="Company links">
+        <a href="#">About</a>
+        <a href="#">Careers</a>
+        <a href="#">Contact</a>
+        <a href="#">Press Kit</a>
+        <a href="#">Partners</a>
+      </nav>
+    </div>
+
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <nav class="footer-links" aria-label="Legal links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Cookie Policy</a>
+        <a href="#">Accessibility</a>
+        <a href="#">Security</a>
+      </nav>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-bottom-inner">
+      <p class="footer-copy">&copy; 2024 CareerLaunch AI. All rights reserved. Built with care for ambitious students.</p>
+      <nav class="footer-legal" aria-label="Legal navigation">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Cookies</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ══════════════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════════════════ -->
+<script>
+  /* ── Mobile nav ── */
+  var menuBtn  = document.getElementById('menuBtn');
+  var drawerBg = document.getElementById('drawerBg');
+  var drawer   = document.getElementById('mobileDrawer');
+  var closeBtn = document.getElementById('drawerClose');
+
+  function openNav() {
+    drawer.classList.add('open');
+    drawerBg.classList.add('open');
+    drawer.setAttribute('aria-hidden', 'false');
+    drawerBg.setAttribute('aria-hidden', 'false');
+    menuBtn.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeNav() {
+    drawer.classList.remove('open');
+    drawerBg.classList.remove('open');
+    drawer.setAttribute('aria-hidden', 'true');
+    drawerBg.setAttribute('aria-hidden', 'true');
+    menuBtn.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+  menuBtn.addEventListener('click', openNav);
+  closeBtn.addEventListener('click', closeNav);
+  drawerBg.addEventListener('click', closeNav);
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeNav(); });
+
+  /* ── FAQ Accordion ── */
+  document.querySelectorAll('.faq-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var item = this.closest('.faq-item');
+      var wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(function(el) {
+        el.classList.remove('open');
+        el.querySelector('.faq-btn').setAttribute('aria-expanded', 'false');
+      });
+      if (!wasOpen) {
+        item.classList.add('open');
+        this.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  /* ── Scroll reveal ── */
+  (function() {
+    if (!('IntersectionObserver' in window)) {
+      document.querySelectorAll('.reveal').forEach(function(el) { el.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.07, rootMargin: '0px 0px -32px 0px' });
+    document.querySelectorAll('.reveal').forEach(function(el) { io.observe(el); });
+  })();
+
+  /* ── Smooth scroll ── */
+  document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+      var t = document.querySelector(this.getAttribute('href'));
+      if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
+  });
+
+  /* ── Active nav highlight ── */
+  (function() {
+    var links = document.querySelectorAll('.hdr-nav a');
+    var secs  = Array.from(document.querySelectorAll('section[id]'));
+    window.addEventListener('scroll', function() {
+      var y = window.scrollY + 90;
+      var cur = '';
+      secs.forEach(function(s) { if (s.offsetTop <= y) cur = s.id; });
+      links.forEach(function(a) {
+        a.style.color = (a.getAttribute('href') === '#' + cur) ? 'var(--gold)' : '';
+      });
+    }, { passive: true });
+  })();
+</script>
+
+</body>
+</html>

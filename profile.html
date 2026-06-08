@@ -1,0 +1,1776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="CareerLaunch AI — Profile. Your career operating system." />
+  <meta name="theme-color" content="#0A0A0B" />
+  <title>Profile — CareerLaunch AI</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <style>
+    /* ══════════════════════════════════════════════
+       FOUNDATIONS
+    ══════════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:       #0A0A0B;
+      --black-2:     #111114;
+      --black-3:     #18181C;
+      --black-4:     #1E1E24;
+      --black-5:     #242430;
+      --gold:        #C9A84C;
+      --gold-light:  #E2C97E;
+      --gold-dim:    #8A6E2F;
+      --gold-pale:   #F0E4C0;
+      --gold-glow:   rgba(201,168,76,.10);
+      --gold-glow-2: rgba(201,168,76,.06);
+      --gold-line:   rgba(201,168,76,.22);
+      --gold-line-2: rgba(201,168,76,.12);
+      --white:       #F5F0E8;
+      --white-2:     #C8C0B0;
+      --white-3:     #7A7468;
+      --white-4:     #4A4640;
+      --border:      rgba(255,255,255,.055);
+      --border-2:    rgba(255,255,255,.08);
+      --border-gold: rgba(201,168,76,.18);
+      --border-gold-2: rgba(201,168,76,.30);
+      --success:     #4ADE80;
+      --success-dim: rgba(74,222,128,.12);
+      --info:        #60A5FA;
+      --info-dim:    rgba(96,165,250,.12);
+      --warn:        #FBBF24;
+      --warn-dim:    rgba(251,191,36,.12);
+      --danger:      #F87171;
+      --danger-dim:  rgba(248,113,113,.12);
+      --purple:      #A78BFA;
+      --purple-dim:  rgba(167,139,250,.12);
+      --sidebar-w:   240px;
+      --topbar-h:    60px;
+      --serif:       'Cormorant Garamond', Georgia, serif;
+      --sans:        'DM Sans', system-ui, sans-serif;
+    }
+
+    html { background: var(--black); color: var(--white); font-family: var(--sans); font-size: 16px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    body { overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    button { cursor: pointer; font-family: inherit; border: none; background: none; }
+
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--black-5); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--gold-dim); }
+
+    .app { display: flex; min-height: 100vh; }
+
+    /* ── SIDEBAR (identical) ── */
+    .sidebar { width: var(--sidebar-w); min-height: 100vh; background: var(--black-2); border-right: 1px solid var(--border); display: flex; flex-direction: column; position: fixed; top: 0; left: 0; z-index: 100; transition: transform .3s cubic-bezier(.16,1,.3,1); }
+    .sidebar-logo { height: var(--topbar-h); padding: 0 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .sidebar-logo-mark { width: 28px; height: 28px; border: 1px solid var(--gold-line); border-radius: 6px; background: rgba(201,168,76,.07); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .sidebar-logo-mark svg { width: 16px; height: 16px; }
+    .sidebar-brand { font-size: 11.5px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--white); }
+    .sidebar-brand em { font-style: normal; color: var(--gold); }
+    .sidebar-nav { flex: 1; padding: 20px 12px; display: flex; flex-direction: column; gap: 2px; overflow-y: auto; }
+    .nav-section-label { font-size: 8.5px; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: var(--white-4); padding: 16px 8px 8px; }
+    .nav-section-label:first-child { padding-top: 0; }
+    .nav-link { display: flex; align-items: center; gap: 12px; height: 38px; padding: 0 10px; border-radius: 7px; font-size: 13px; font-weight: 400; color: var(--white-3); transition: background .15s, color .15s; }
+    .nav-link:hover { background: var(--gold-glow-2); color: var(--white-2); }
+    .nav-link.active { background: var(--gold-glow); color: var(--gold); border-left: 2px solid var(--gold); padding-left: 8px; }
+    .nav-link.active .nav-icon { color: var(--gold); }
+    .nav-icon { width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; color: var(--white-4); transition: color .15s; }
+    .nav-link:hover .nav-icon { color: var(--white-2); }
+    .nav-badge { margin-left: auto; font-size: 9.5px; font-weight: 600; background: var(--gold-glow); border: 1px solid var(--gold-line); color: var(--gold); padding: 1px 7px; border-radius: 999px; }
+    .sidebar-footer { border-top: 1px solid var(--border); padding: 16px 12px; }
+    .sidebar-user { display: flex; align-items: center; gap: 10px; padding: 10px; border-radius: 8px; cursor: pointer; transition: background .15s; }
+    .sidebar-user:hover { background: var(--gold-glow-2); }
+    .user-av { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, var(--gold), var(--gold-dim)); color: var(--black); display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 12px; flex-shrink: 0; }
+    .user-info { flex: 1; min-width: 0; }
+    .user-name { font-size: 12.5px; font-weight: 500; color: var(--white); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .user-role { font-size: 10.5px; font-weight: 300; color: var(--white-3); }
+    .user-settings { font-size: 14px; color: var(--white-4); }
+
+    /* ── MAIN AREA ── */
+    .main-area { margin-left: var(--sidebar-w); flex: 1; display: flex; flex-direction: column; min-height: 100vh; }
+
+    /* ── TOPBAR ── */
+    .topbar { height: var(--topbar-h); background: rgba(10,10,11,.9); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 90; padding: 0 32px; display: flex; align-items: center; gap: 20px; }
+    .topbar-title { font-family: var(--serif); font-size: 20px; font-weight: 600; color: var(--white); flex-shrink: 0; }
+    .topbar-title em { font-style: italic; color: var(--gold); }
+    .topbar-search { flex: 1; max-width: 360px; height: 34px; background: var(--black-3); border: 1px solid var(--border); border-radius: 7px; display: flex; align-items: center; padding: 0 12px; gap: 8px; transition: border-color .2s; }
+    .topbar-search:focus-within { border-color: var(--border-gold); }
+    .topbar-search-icon { font-size: 12px; color: var(--white-4); flex-shrink: 0; }
+    .topbar-search input { flex: 1; background: none; border: none; outline: none; font-size: 12.5px; font-weight: 300; color: var(--white); font-family: var(--sans); }
+    .topbar-search input::placeholder { color: var(--white-4); }
+    .topbar-search-kbd { font-size: 9px; letter-spacing: .08em; color: var(--white-4); border: 1px solid var(--border); border-radius: 3px; padding: 1px 5px; font-family: monospace; }
+    .topbar-right { margin-left: auto; display: flex; align-items: center; gap: 12px; }
+    .topbar-btn { width: 34px; height: 34px; border-radius: 7px; background: var(--black-3); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 14px; color: var(--white-3); transition: border-color .15s, color .15s; position: relative; }
+    .topbar-btn:hover { border-color: var(--border-gold); color: var(--gold); }
+    .notif-dot { position: absolute; top: 6px; right: 6px; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); border: 1.5px solid var(--black-2); }
+    .topbar-user { display: flex; align-items: center; gap: 8px; height: 34px; padding: 0 12px; background: var(--black-3); border: 1px solid var(--border); border-radius: 7px; cursor: pointer; transition: border-color .15s; }
+    .topbar-user:hover { border-color: var(--border-gold); }
+    .topbar-av { width: 22px; height: 22px; border-radius: 50%; background: linear-gradient(135deg, var(--gold), var(--gold-dim)); color: var(--black); display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 9px; }
+    .topbar-uname { font-size: 12px; font-weight: 400; color: var(--white-2); }
+    .topbar-caret { font-size: 9px; color: var(--white-4); }
+    .topbar-menu-btn { display: none; width: 34px; height: 34px; border-radius: 7px; background: var(--black-3); border: 1px solid var(--border); align-items: center; justify-content: center; font-size: 16px; color: var(--white-2); }
+
+    /* ── CONTENT ── */
+    .content { flex: 1; padding: 32px; max-width: 1400px; width: 100%; }
+
+    /* ── WELCOME BAR ── */
+    .welcome-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px; flex-wrap: wrap; gap: 16px; }
+    .welcome-greeting { font-size: 10px; font-weight: 400; letter-spacing: .2em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 6px; }
+    .welcome-h { font-family: var(--serif); font-size: 30px; font-weight: 600; color: var(--white); line-height: 1.1; }
+    .welcome-h em { font-style: italic; color: var(--gold); }
+    .welcome-sub { font-size: 12.5px; font-weight: 300; color: var(--white-3); margin-top: 6px; }
+    .welcome-actions { display: flex; gap: 10px; }
+    .btn-primary { display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 20px; background: var(--gold); color: var(--black); border-radius: 999px; font-size: 11.5px; font-weight: 500; letter-spacing: .04em; transition: background .2s, transform .15s; }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+    .btn-secondary-sm { display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 18px; background: var(--black-3); border: 1px solid var(--border); border-radius: 999px; font-size: 11.5px; font-weight: 400; color: var(--white-2); transition: border-color .2s, color .2s; }
+    .btn-secondary-sm:hover { border-color: var(--border-gold); color: var(--gold); }
+
+    /* ── ROW HELPERS ── */
+    .row { margin-bottom: 24px; }
+    .row-label { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; font-size: 9px; font-weight: 400; letter-spacing: .22em; text-transform: uppercase; color: var(--white-4); }
+    .row-label::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, var(--border), transparent); }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .grid-4030 { display: grid; grid-template-columns: 1.4fr .9fr; gap: 16px; }
+    .grid-6040 { display: grid; grid-template-columns: 1.1fr .9fr; gap: 16px; }
+
+    /* ── WIDGET BASE ── */
+    .widget { background: var(--black-2); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+    .widget-head { padding: 20px 22px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+    .widget-title { font-size: 11px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--white-3); flex: 1; }
+    .widget-action { font-size: 10.5px; font-weight: 400; letter-spacing: .08em; color: var(--gold); padding: 4px 10px; border: 1px solid var(--border-gold); border-radius: 999px; transition: background .15s; cursor: pointer; }
+    .widget-action:hover { background: var(--gold-glow); }
+    .widget-body { padding: 22px; }
+
+    /* ── STAT CARDS ── */
+    .stat-card { background: var(--black-2); border: 1px solid var(--border); border-radius: 14px; padding: 22px; position: relative; overflow: hidden; transition: border-color .25s, background .25s; }
+    .stat-card:hover { border-color: var(--border-gold); background: var(--black-3); }
+    .stat-card::after { content: ''; position: absolute; bottom: 0; left: 0; height: 1px; width: 0; background: linear-gradient(90deg, var(--gold), transparent); transition: width .4s cubic-bezier(.16,1,.3,1); }
+    .stat-card:hover::after { width: 100%; }
+    .stat-card::before { content: ''; position: absolute; top: -40px; right: -40px; width: 100px; height: 100px; background: radial-gradient(circle, rgba(201,168,76,.07) 0%, transparent 70%); pointer-events: none; opacity: 0; transition: opacity .3s; }
+    .stat-card:hover::before { opacity: 1; }
+    .stat-card-label { font-size: 8.5px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: var(--white-4); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+    .stat-card-icon { width: 24px; height: 24px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 11px; }
+    .stat-card-val { font-family: var(--serif); font-size: 44px; font-weight: 600; line-height: 1; color: var(--white); margin-bottom: 10px; }
+    .stat-card-sub { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 300; color: var(--white-3); }
+    .trend-up { color: var(--success); font-size: 10px; }
+    .stat-accent-resume { border-top: 2px solid rgba(96,165,250,.5); }
+    .stat-accent-interview { border-top: 2px solid rgba(167,139,250,.5); }
+    .stat-accent-projects { border-top: 2px solid rgba(74,222,128,.5); }
+    .stat-accent-career { border-top: 2px solid rgba(201,168,76,.5); }
+
+    /* ── SKILL BARS ── */
+    .skill-bars { display: flex; flex-direction: column; gap: 14px; }
+    .skill-bar-meta { display: flex; justify-content: space-between; margin-bottom: 6px; }
+    .skill-bar-name { font-size: 12px; font-weight: 400; color: var(--white-2); }
+    .skill-bar-pct  { font-size: 12px; font-weight: 600; color: var(--gold); }
+    .skill-track { height: 5px; background: var(--black-5); border-radius: 3px; overflow: hidden; }
+    .skill-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--gold), var(--gold-light)); transition: width 1s cubic-bezier(.16,1,.3,1); }
+
+    /* ── PROFILE HERO CARD ── */
+    .profile-hero {
+      background: var(--black-2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      position: relative;
+    }
+    /* Ambient gold radial behind avatar */
+    .profile-hero::before {
+      content: '';
+      position: absolute;
+      top: -60px; left: -60px;
+      width: 280px; height: 280px;
+      background: radial-gradient(circle, rgba(201,168,76,.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .profile-hero-banner {
+      height: 100px;
+      background: linear-gradient(135deg, var(--black-3) 0%, var(--black-4) 40%, rgba(201,168,76,.06) 100%);
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    /* Subtle grid lines on banner */
+    .profile-hero-banner::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(201,168,76,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,.04) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+    .profile-hero-body {
+      padding: 0 28px 28px;
+      position: relative;
+    }
+    .profile-avatar-wrap {
+      position: relative;
+      margin-top: -44px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: flex-end;
+      gap: 16px;
+    }
+    .profile-avatar {
+      width: 88px; height: 88px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dim));
+      border: 3px solid var(--black-2);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--serif); font-size: 32px; font-weight: 600;
+      color: var(--black); flex-shrink: 0;
+      position: relative; z-index: 1;
+    }
+    .profile-avatar-status {
+      position: absolute; bottom: 4px; right: 4px;
+      width: 16px; height: 16px;
+      border-radius: 50%; background: var(--success);
+      border: 2px solid var(--black-2);
+    }
+    .profile-avatar-badges {
+      display: flex; gap: 6px; flex-wrap: wrap;
+      padding-bottom: 6px;
+    }
+    .avatar-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      height: 22px; padding: 0 10px;
+      background: var(--gold-glow); border: 1px solid var(--gold-line);
+      border-radius: 999px;
+      font-size: 9.5px; font-weight: 500; color: var(--gold);
+      letter-spacing: .06em;
+    }
+    .profile-name-row {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 16px; flex-wrap: wrap; margin-bottom: 10px;
+    }
+    .profile-name {
+      font-family: var(--serif);
+      font-size: 28px; font-weight: 600; color: var(--white); line-height: 1.1;
+    }
+    .profile-role-line {
+      font-size: 13px; font-weight: 300; color: var(--white-3); margin-top: 4px;
+    }
+    .profile-hero-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .profile-meta-strip {
+      display: flex; gap: 20px; flex-wrap: wrap;
+      padding-top: 16px; border-top: 1px solid var(--border);
+      margin-top: 16px;
+    }
+    .profile-meta-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--white-3); }
+    .profile-meta-icon { font-size: 12px; color: var(--white-4); }
+
+    /* ── QUICK SCORE ROW ── */
+    .score-strip {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      background: var(--black-3); border: 1px solid var(--border); border-radius: 12px;
+      overflow: hidden;
+    }
+    .score-cell {
+      padding: 18px 20px;
+      border-right: 1px solid var(--border);
+      text-align: center;
+      transition: background .15s;
+    }
+    .score-cell:hover { background: var(--black-4); }
+    .score-cell:last-child { border-right: none; }
+    .score-cell-val { font-family: var(--serif); font-size: 28px; font-weight: 600; color: var(--gold); line-height: 1; margin-bottom: 4px; }
+    .score-cell-lbl { font-size: 9px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--white-4); }
+    .score-cell-trend { font-size: 10px; color: var(--success); margin-top: 4px; }
+
+    /* ── ABOUT SECTION ── */
+    .about-text { font-size: 14px; font-weight: 300; line-height: 1.8; color: var(--white-2); }
+    .about-text strong { font-weight: 500; color: var(--white); }
+
+    /* ── SKILL TAGS ── */
+    .skill-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+    .skill-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      height: 28px; padding: 0 12px;
+      background: var(--black-3); border: 1px solid var(--border);
+      border-radius: 6px; font-size: 11.5px; font-weight: 400; color: var(--white-2);
+      transition: border-color .15s, color .15s; cursor: default;
+    }
+    .skill-tag:hover { border-color: var(--border-gold); color: var(--gold); }
+    .skill-tag-dot { width: 6px; height: 6px; border-radius: 50%; }
+
+    /* ── TIMELINE ── */
+    .timeline { display: flex; flex-direction: column; gap: 0; }
+    .timeline-item { display: grid; grid-template-columns: 20px 1fr; gap: 0 16px; padding-bottom: 24px; position: relative; }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-line-col { display: flex; flex-direction: column; align-items: center; }
+    .timeline-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--gold); border: 2px solid var(--black-2); box-shadow: 0 0 0 2px var(--gold-dim); flex-shrink: 0; margin-top: 4px; }
+    .timeline-dot.dim { background: var(--black-5); box-shadow: 0 0 0 2px var(--border); }
+    .timeline-connector { flex: 1; width: 1px; background: linear-gradient(180deg, var(--border-gold), transparent); margin: 4px 0 0; }
+    .timeline-item:last-child .timeline-connector { display: none; }
+    .timeline-content { padding-bottom: 4px; }
+    .timeline-date { font-size: 9.5px; font-weight: 400; letter-spacing: .14em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 5px; }
+    .timeline-org { font-size: 14px; font-weight: 500; color: var(--white); margin-bottom: 2px; }
+    .timeline-role { font-size: 12px; font-weight: 300; color: var(--white-3); margin-bottom: 6px; }
+    .timeline-desc { font-size: 12px; font-weight: 300; color: var(--white-4); line-height: 1.6; }
+
+    /* ── CERT CARDS ── */
+    .cert-card { background: var(--black-3); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; display: flex; gap: 14px; align-items: flex-start; transition: border-color .2s; }
+    .cert-card:hover { border-color: var(--border-gold); }
+    .cert-icon { width: 36px; height: 36px; border-radius: 8px; background: var(--gold-glow); border: 1px solid var(--border-gold); display: flex; align-items: center; justify-content: center; font-size: 17px; flex-shrink: 0; }
+    .cert-body { flex: 1; }
+    .cert-title { font-size: 13px; font-weight: 500; color: var(--white); margin-bottom: 2px; }
+    .cert-issuer { font-size: 11px; font-weight: 300; color: var(--white-3); margin-bottom: 4px; }
+    .cert-date { font-size: 10px; font-weight: 400; color: var(--white-4); }
+    .cert-badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 9px; border-radius: 999px; font-size: 9px; font-weight: 600; letter-spacing: .08em; background: var(--success-dim); border: 1px solid rgba(74,222,128,.25); color: var(--success); }
+
+    /* ── ACHIEVEMENT CARDS ── */
+    .achievement-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .achievement-card { background: var(--black-3); border: 1px solid var(--border); border-radius: 10px; padding: 16px; text-align: center; transition: border-color .25s, transform .2s; cursor: default; }
+    .achievement-card:hover { border-color: var(--border-gold); transform: translateY(-3px); }
+    .achievement-icon { font-size: 28px; margin-bottom: 8px; }
+    .achievement-name { font-size: 11.5px; font-weight: 500; color: var(--white); margin-bottom: 3px; }
+    .achievement-desc { font-size: 10px; font-weight: 300; color: var(--white-4); line-height: 1.4; }
+    .achievement-locked { opacity: .35; filter: grayscale(1); }
+
+    /* ── GOALS ── */
+    .goal-item { display: flex; align-items: flex-start; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--border); }
+    .goal-item:last-child { border-bottom: none; }
+    .goal-status { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+    .goal-status.active { background: var(--gold); box-shadow: 0 0 6px rgba(201,168,76,.5); }
+    .goal-status.done   { background: var(--success); }
+    .goal-status.future { background: var(--border-2); }
+    .goal-body { flex: 1; }
+    .goal-title { font-size: 13px; font-weight: 500; color: var(--white); margin-bottom: 2px; }
+    .goal-desc { font-size: 11.5px; font-weight: 300; color: var(--white-3); line-height: 1.5; }
+    .goal-deadline { font-size: 10px; color: var(--white-4); margin-top: 4px; }
+    .goal-pct { font-size: 11px; font-weight: 600; color: var(--gold); flex-shrink: 0; }
+
+    /* ── SETTINGS FORM ── */
+    .settings-group { margin-bottom: 24px; }
+    .settings-group-title { font-size: 9px; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: var(--white-4); margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+    .setting-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+    .setting-row:last-child { border-bottom: none; }
+    .setting-label { font-size: 13px; font-weight: 400; color: var(--white-2); }
+    .setting-desc { font-size: 11px; font-weight: 300; color: var(--white-4); margin-top: 2px; }
+    .toggle-wrap { position: relative; width: 42px; height: 24px; flex-shrink: 0; }
+    .toggle-wrap input { opacity: 0; width: 0; height: 0; position: absolute; }
+    .toggle-track { position: absolute; inset: 0; background: var(--black-5); border: 1px solid var(--border); border-radius: 12px; cursor: pointer; transition: background .2s; }
+    .toggle-track::before { content: ''; position: absolute; width: 16px; height: 16px; border-radius: 50%; background: var(--white-3); top: 3px; left: 3px; transition: transform .2s, background .2s; }
+    .toggle-wrap input:checked + .toggle-track { background: rgba(201,168,76,.2); border-color: var(--gold-line); }
+    .toggle-wrap input:checked + .toggle-track::before { transform: translateX(18px); background: var(--gold); }
+    .form-input { width: 100%; background: var(--black-3); border: 1px solid var(--border); border-radius: 8px; padding: 9px 14px; font-size: 13px; font-weight: 300; color: var(--white); font-family: var(--sans); outline: none; transition: border-color .2s; }
+    .form-input:focus { border-color: var(--border-gold); }
+    .form-input::placeholder { color: var(--white-4); }
+    .form-label { font-size: 10px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--white-4); margin-bottom: 7px; display: block; }
+    .form-field { margin-bottom: 16px; }
+
+    /* ── ACTIVITY SUMMARY ── */
+    .activity-list { display: flex; flex-direction: column; }
+    .activity-item { display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--border); transition: padding-left .2s; }
+    .activity-item:last-child { border-bottom: none; }
+    .activity-item:hover { padding-left: 4px; }
+    .act-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; margin-top: 2px; }
+    .act-title { font-size: 13px; font-weight: 500; color: var(--white); margin-bottom: 1px; }
+    .act-title strong { color: var(--gold); font-weight: 500; }
+    .act-desc { font-size: 11.5px; font-weight: 300; color: var(--white-3); }
+    .act-time { font-size: 10px; font-weight: 300; color: var(--white-4); margin-top: 3px; }
+
+    /* ── CONNECTED ACCOUNTS ── */
+    .connected-row { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+    .connected-row:last-child { border-bottom: none; }
+    .connected-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; background: var(--black-3); border: 1px solid var(--border); }
+    .connected-name { flex: 1; font-size: 13px; font-weight: 400; color: var(--white-2); }
+    .connected-handle { font-size: 11px; font-weight: 300; color: var(--white-4); margin-top: 1px; }
+    .connected-status { font-size: 9.5px; font-weight: 600; padding: 3px 10px; border-radius: 999px; border: 1px solid; }
+    .status-on  { background: var(--success-dim); border-color: rgba(74,222,128,.25); color: var(--success); }
+    .status-off { background: var(--black-5); border-color: var(--border); color: var(--white-4); }
+
+    /* ── CHART ── */
+    .chart-container { position: relative; }
+    .chart-h160 { height: 160px; }
+
+    /* ── MOBILE OVERLAY ── */
+    .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 99; }
+    .sidebar-overlay.open { display: block; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1200px) { .grid-4 { grid-template-columns: repeat(2, 1fr); } .achievement-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 1024px) { .sidebar { transform: translateX(-100%); } .sidebar.open { transform: translateX(0); } .main-area { margin-left: 0; } .topbar-menu-btn { display: flex; } .grid-4030 { grid-template-columns: 1fr; } .grid-6040 { grid-template-columns: 1fr; } }
+    @media (max-width: 768px) { .content { padding: 20px 16px; } .topbar { padding: 0 16px; } .topbar-search { display: none; } .grid-2 { grid-template-columns: 1fr; } .grid-3 { grid-template-columns: 1fr; } .score-strip { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 480px) { .topbar-uname, .topbar-caret { display: none; } .achievement-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    .anim { animation: fadeUp .6s cubic-bezier(.16,1,.3,1) backwards; }
+    .anim-d1 { animation-delay: .05s; } .anim-d2 { animation-delay: .10s; } .anim-d3 { animation-delay: .15s; }
+    .anim-d4 { animation-delay: .20s; } .anim-d5 { animation-delay: .25s; } .anim-d6 { animation-delay: .30s; }
+    @keyframes livePulse { 0%,100%{opacity:1} 50%{opacity:.25} }
+    .live-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--success); animation: livePulse 2s ease-in-out infinite; }
+    .sr-only { position: absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+  </style>
+</head>
+<body>
+<div class="app">
+
+<!-- ══════════════════════════════════════════════
+     SIDEBAR
+══════════════════════════════════════════════════ -->
+<aside class="sidebar" id="sidebar" role="navigation" aria-label="Dashboard navigation">
+  <a href="index.html" class="sidebar-logo" aria-label="CareerLaunch AI — home">
+    <div class="sidebar-logo-mark" aria-hidden="true">
+      <svg viewBox="0 0 16 16" fill="none">
+        <path d="M3 12L8 4L13 12" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M5.5 9.5L10.5 9.5" stroke="#C9A84C" stroke-width="1.2" stroke-linecap="round"/>
+        <circle cx="8" cy="4" r="1.2" fill="#C9A84C"/>
+      </svg>
+    </div>
+    <span class="sidebar-brand">CareerLaunch <em>AI</em></span>
+  </a>
+  <nav class="sidebar-nav" aria-label="Main navigation">
+    <span class="nav-section-label">Navigation</span>
+    <a href="dashboard.html" class="nav-link">
+      <span class="nav-icon" aria-hidden="true">⌂</span><span>Dashboard</span>
+    </a>
+    <a href="skill-roadmap.html" class="nav-link">
+      <span class="nav-icon" aria-hidden="true">◈</span><span>Skill Roadmap</span>
+      <span class="nav-badge" id="nav-badge-skills">0</span>
+    </a>
+    <a href="internship-tracker.html" class="nav-link">
+      <span class="nav-icon" aria-hidden="true">◎</span><span>Internships</span>
+      <span class="nav-badge" id="nav-badge-internships">0</span>
+    </a>
+    <a href="projects-tracker.html" class="nav-link">
+      <span class="nav-icon" aria-hidden="true">◫</span><span>Projects</span>
+    </a>
+    <a href="analytics.html" class="nav-link">
+      <span class="nav-icon" aria-hidden="true">▲</span><span>Analytics</span>
+    </a>
+    <span class="nav-section-label">Account</span>
+    <a href="profile.html" class="nav-link active" aria-current="page">
+      <span class="nav-icon" aria-hidden="true">○</span><span>Profile</span>
+    </a>
+    <a href="#" class="nav-link">
+      <span class="nav-icon" aria-hidden="true">⚙</span><span>Settings</span>
+    </a>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="sidebar-user" role="button" aria-label="User profile menu" tabindex="0">
+      <div class="user-av" id="sidebarAvatar" aria-hidden="true">SK</div>
+      <div class="user-info">
+        <div class="user-name" id="sidebarName">Siddharth K.</div>
+        <div class="user-role">Final Year · CS</div>
+      </div>
+      <span class="user-settings" aria-hidden="true">⋯</span>
+    </div>
+  </div>
+</aside>
+
+<div class="sidebar-overlay" id="sidebarOverlay" aria-hidden="true"></div>
+
+<!-- ══════════════════════════════════════════════
+     MAIN AREA
+══════════════════════════════════════════════════ -->
+<div class="main-area">
+
+  <!-- TOPBAR -->
+  <header class="topbar" role="banner">
+    <button class="topbar-menu-btn topbar-btn" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="sidebar">☰</button>
+    <h1 class="topbar-title">Career <em>Profile</em></h1>
+    <div class="topbar-search" role="search">
+      <span class="topbar-search-icon" aria-hidden="true">⌕</span>
+      <input type="search" placeholder="Search skills, certifications, goals…" aria-label="Search profile" />
+      <kbd class="topbar-search-kbd">⌘K</kbd>
+    </div>
+    <div class="topbar-right">
+      <button class="topbar-btn" aria-label="Notifications">🔔<span class="notif-dot" aria-hidden="true"></span></button>
+      <button class="topbar-btn" aria-label="Command palette">⌘</button>
+      <button class="topbar-user" aria-label="User menu">
+        <div class="topbar-av" id="topbarAvatar" aria-hidden="true">SK</div>
+        <span class="topbar-uname" id="topbarName">Siddharth K.</span>
+        <span class="topbar-caret" aria-hidden="true">▾</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- CONTENT -->
+  <main class="content" id="main-content" aria-label="Profile content">
+
+    <!-- Welcome Bar -->
+    <div class="welcome-bar anim">
+      <div class="welcome-left">
+        <p class="welcome-greeting">
+          <span class="live-dot" aria-hidden="true"></span>
+          &nbsp;Career Profile &middot; Operating System
+        </p>
+        <h2 class="welcome-h">Your career, <em>your story.</em></h2>
+        <p class="welcome-sub">Last updated today · Profile completeness: 84%</p>
+      </div>
+      <div class="welcome-actions">
+        <button class="btn-primary" id="exportResumeBtn">↓ Export Resume</button>
+        <button class="btn-secondary-sm" id="shareProfileBtn">⬡ Share Profile</button>
+      </div>
+    </div>
+
+    <!-- ─────────────────────────────────────────
+         ROW 1 — PROFILE HERO CARD
+    ───────────────────────────────────────────── -->
+    <div class="row anim anim-d1" role="region" aria-label="Profile overview">
+
+      <div class="profile-hero">
+        <div class="profile-hero-banner" aria-hidden="true"></div>
+        <div class="profile-hero-body">
+          <div class="profile-avatar-wrap">
+            <div class="profile-avatar" aria-label="Avatar for Siddharth K." id="profile-avatar-initials">
+              <span id="profile-avatar-text">SK</span>
+              <div class="profile-avatar-status" aria-label="Online status" title="Active"></div>
+            </div>
+            <div class="profile-avatar-badges">
+              <span class="avatar-badge">🏆 Top 8%</span>
+              <span class="avatar-badge">🔥 14-Day Streak</span>
+              <span class="avatar-badge">✦ Final Year</span>
+            </div>
+          </div>
+          <div class="profile-name-row">
+            <div>
+              <h2 class="profile-name" id="profile-name-display">Siddharth Kulkarni</h2>
+              <p class="profile-role-line" id="profile-title-display">Aspiring Full-Stack Developer &middot; Final Year CS &middot; Pune, India</p>
+              <!-- Edit Mode Fields -->
+              <div style="display:none;margin-top:16px;gap:16px;flex-direction:column;" data-edit-field>
+                <div>
+                  <label class="form-label">Name</label>
+                  <input id="name-input" type="text" class="form-input" placeholder="Your full name" />
+                </div>
+                <div>
+                  <label class="form-label">Professional Title</label>
+                  <input id="title-input" type="text" class="form-input" placeholder="Your professional title" />
+                </div>
+              </div>
+            </div>
+            <div class="profile-hero-actions" id="profile-actions-container">
+              <!-- View Mode Actions -->
+              <div id="view-mode-actions" style="display:flex;gap:8px;">
+                <button class="btn-secondary-sm" id="editProfileBtn">✏ Edit Profile</button>
+                <a href="https://github.com" target="_blank" rel="noopener" class="btn-secondary-sm">⌥ GitHub</a>
+                <a href="https://linkedin.com" target="_blank" rel="noopener" class="btn-secondary-sm">in LinkedIn</a>
+              </div>
+              <!-- Edit Mode Actions -->
+              <div id="edit-mode-actions" style="display:none;gap:8px;">
+                <button class="btn-secondary-sm" id="cancelProfileBtn-header">Cancel</button>
+                <button class="btn-primary" id="saveProfileBtn-header">✓ Save Profile</button>
+              </div>
+            </div>
+          </div>
+          <div class="profile-meta-strip">
+            <div class="profile-meta-item" data-display-field><span class="profile-meta-icon" aria-hidden="true">📍</span><span id="meta-location">Pune, Maharashtra, India</span></div>
+            <div class="profile-meta-item" data-display-field><span class="profile-meta-icon" aria-hidden="true">🎓</span><span id="meta-education">B.Tech CS · Graduating 2024</span></div>
+            <div class="profile-meta-item" data-display-field><span class="profile-meta-icon" aria-hidden="true">📧</span><span id="meta-email">siddharth.k@example.com</span></div>
+            <!-- Edit Mode Fields -->
+            <div style="display:none;grid-template-columns:1fr 1fr;gap:16px;" data-edit-field>
+              <div>
+                <label class="form-label">Location</label>
+                <input id="location-input" type="text" class="form-input" placeholder="City, State" />
+              </div>
+              <div>
+                <label class="form-label">Email</label>
+                <input id="email-input" type="email" class="form-input" placeholder="your@email.com" />
+              </div>
+              <div style="grid-column:1/-1;">
+                <label class="form-label">Education</label>
+                <input id="education-input" type="text" class="form-input" placeholder="Degree · Institution · Year" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ─────────────────────────────────────────
+         ROW 2 — CAREER SCORE STRIP (4 quick metrics)
+    ───────────────────────────────────────────── -->
+    <div class="row anim anim-d2" role="region" aria-label="Career score overview">
+      <div class="row-label">Career Scores</div>
+      <div class="score-strip" role="list">
+        <div class="score-cell" role="listitem" aria-label="Career Score 78">
+          <div class="score-cell-val">78</div>
+          <div class="score-cell-lbl">Career Score</div>
+          <div class="score-cell-trend">↑ +5 pts</div>
+        </div>
+        <div class="score-cell" role="listitem" aria-label="Resume Score 72">
+          <div class="score-cell-val" style="color:var(--info)">72</div>
+          <div class="score-cell-lbl">Resume Score</div>
+          <div class="score-cell-trend">↑ +8 pts</div>
+        </div>
+        <div class="score-cell" role="listitem" aria-label="Interview Readiness 85%">
+          <div class="score-cell-val" style="color:var(--purple)">85<span style="font-size:16px">%</span></div>
+          <div class="score-cell-lbl">Interview Ready</div>
+          <div class="score-cell-trend">↑ +12%</div>
+        </div>
+        <div class="score-cell" role="listitem" aria-label="Skills Mastered 12">
+          <div class="score-cell-val" style="color:var(--success)">12</div>
+          <div class="score-cell-lbl">Skills Mastered</div>
+          <div class="score-cell-trend">↑ +3 this month</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─────────────────────────────────────────
+         ROW 3 — ABOUT + SKILLS OVERVIEW
+    ───────────────────────────────────────────── -->
+    <div class="row" role="region" aria-labelledby="row-about">
+      <div class="row-label" id="row-about">About &amp; Skills</div>
+      <div class="grid-6040">
+
+        <!-- About -->
+        <div class="widget anim anim-d2">
+          <div class="widget-head">
+            <span class="widget-title">About</span>
+            <button class="widget-action" onclick="document.getElementById('about-input').focus()">Edit</button>
+          </div>
+          <div class="widget-body">
+            <div class="form-field" style="margin-bottom:20px;">
+              <label class="form-label" for="about-input">Bio</label>
+              <textarea id="about-input" class="form-input" rows="4" style="resize:vertical;" aria-label="Your career bio">Aspiring full-stack developer with a passion for building elegant, high-performance web applications. I bridge beautiful design and solid engineering — currently hunting for a summer internship where I can ship real product to real users.
+
+Strong in React, Node.js, and TypeScript. Currently levelling up in Docker, cloud infrastructure, and system design. Open source contributor and weekend hackathon participant.</textarea>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;">
+              <div class="form-field" style="margin-bottom:0">
+                <label class="form-label" for="github-input">GitHub</label>
+                <input id="github-input" type="url" class="form-input" value="github.com/siddharth-k" placeholder="github.com/username" aria-label="GitHub profile URL" />
+              </div>
+              <div class="form-field" style="margin-bottom:0">
+                <label class="form-label" for="linkedin-input">LinkedIn</label>
+                <input id="linkedin-input" type="url" class="form-input" value="linkedin.com/in/siddharth-k" placeholder="linkedin.com/in/username" aria-label="LinkedIn profile URL" />
+              </div>
+            </div>
+            <div class="form-field" style="margin-bottom:0">
+              <label class="form-label" for="portfolio-input">Portfolio Website</label>
+              <input id="portfolio-input" type="url" class="form-input" value="siddharth.dev" placeholder="https://yoursite.com" aria-label="Portfolio website URL" />
+            </div>
+            <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:8px;">
+              <button class="btn-secondary-sm" id="cancelBtn">Cancel</button>
+              <button class="btn-primary" id="saveProfileBtn">Save Changes</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Skills Overview -->
+        <div class="widget anim anim-d3">
+          <div class="widget-head">
+            <span class="widget-title">Skill Overview</span>
+            <a href="skill-roadmap.html" class="widget-action">View Roadmap</a>
+          </div>
+          <div class="widget-body">
+            <div class="skill-bars" style="margin-bottom:20px;">
+              <div class="skill-bar-item">
+                <div class="skill-bar-meta"><span class="skill-bar-name">React / Next.js</span><span class="skill-bar-pct">82%</span></div>
+                <div class="skill-track"><div class="skill-fill" data-pct="82"></div></div>
+              </div>
+              <div class="skill-bar-item">
+                <div class="skill-bar-meta"><span class="skill-bar-name">Node.js / Express</span><span class="skill-bar-pct" style="color:var(--info)">68%</span></div>
+                <div class="skill-track"><div class="skill-fill" data-pct="68" style="background:linear-gradient(90deg,var(--info),#93C5FD)"></div></div>
+              </div>
+              <div class="skill-bar-item">
+                <div class="skill-bar-meta"><span class="skill-bar-name">TypeScript</span><span class="skill-bar-pct" style="color:var(--purple)">75%</span></div>
+                <div class="skill-track"><div class="skill-fill" data-pct="75" style="background:linear-gradient(90deg,var(--purple),#C4B5FD)"></div></div>
+              </div>
+              <div class="skill-bar-item">
+                <div class="skill-bar-meta"><span class="skill-bar-name">PostgreSQL / MongoDB</span><span class="skill-bar-pct" style="color:var(--success)">60%</span></div>
+                <div class="skill-track"><div class="skill-fill" data-pct="60" style="background:linear-gradient(90deg,var(--success),#86EFAC)"></div></div>
+              </div>
+              <div class="skill-bar-item">
+                <div class="skill-bar-meta"><span class="skill-bar-name">Docker / DevOps</span><span class="skill-bar-pct" style="color:var(--warn)">38%</span></div>
+                <div class="skill-track"><div class="skill-fill" data-pct="38" style="background:linear-gradient(90deg,var(--warn),#FDE68A)"></div></div>
+              </div>
+            </div>
+            <div style="margin-bottom:8px;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--white-4);">All Skill Tags</div>
+            <div class="skill-tags" role="list" aria-label="All skills">
+              <span class="skill-tag" role="listitem"><span class="skill-tag-dot" style="background:var(--gold)"></span>React</span>
+              <span class="skill-tag" role="listitem"><span class="skill-tag-dot" style="background:var(--gold)"></span>Next.js</span>
+              <span class="skill-tag" role="listitem"><span class="skill-tag-dot" style="background:var(--info)"></span>Node.js</span>
+              <span class="skill-tag" role="listitem"><span class="skill-tag-dot" style="background:var(--purple)"></span>TypeScript</span>
+              <span class="skill-tag" role="listitem"><span class="skill-tag-dot" style="background:var(--success)"></span>PostgreSQL</span>
+              <span class="skill-tag" role="listitem"><span class="skill-tag-dot" style="background:var(--success)"></span>MongoDB</span>
+              <span class="skill-tag" role="listitem"><span class="skill-tag-dot" style="background:var(--warn)"></span>Docker</span>
+              <span class="skill-tag" role="listitem"><span class="skill-tag-dot" style="background:var(--border-2)"></span>Figma</span>
+              <span class="skill-tag" role="listitem"><span class="skill-tag-dot" style="background:var(--border-2)"></span>Git</span>
+              <span class="skill-tag" role="listitem"><span class="skill-tag-dot" style="background:var(--border-2)"></span>Tailwind</span>
+              <span class="skill-tag" role="listitem"><span class="skill-tag-dot" style="background:var(--border-2)"></span>REST APIs</span>
+              <span class="skill-tag" role="listitem"><span class="skill-tag-dot" style="background:var(--border-2)"></span>GraphQL</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ─────────────────────────────────────────
+         ROW 4 — EDUCATION TIMELINE + CERTIFICATIONS
+    ───────────────────────────────────────────── -->
+    <div class="row" role="region" aria-labelledby="row-edu">
+      <div class="row-label" id="row-edu">Education &amp; Certifications</div>
+      <div class="grid-2">
+
+        <!-- Education Timeline -->
+        <div class="widget anim anim-d2">
+          <div class="widget-head">
+            <span class="widget-title">Education Timeline</span>
+          </div>
+          <div class="widget-body">
+            <div class="timeline" role="list" aria-label="Education history">
+              <div class="timeline-item" role="listitem">
+                <div class="timeline-line-col">
+                  <div class="timeline-dot"></div>
+                  <div class="timeline-connector"></div>
+                </div>
+                <div class="timeline-content">
+                  <div class="timeline-date">2020 — 2024 (Current)</div>
+                  <div class="timeline-org">Pune Institute of Computer Technology</div>
+                  <div class="timeline-role">B.Tech in Computer Science Engineering</div>
+                  <div class="timeline-desc">CGPA: 8.7/10 · Dean's List 2022–23 · Core member of DevClub &amp; Hackathon Cell</div>
+                </div>
+              </div>
+              <div class="timeline-item" role="listitem">
+                <div class="timeline-line-col">
+                  <div class="timeline-dot"></div>
+                  <div class="timeline-connector"></div>
+                </div>
+                <div class="timeline-content">
+                  <div class="timeline-date">Jun – Aug 2023</div>
+                  <div class="timeline-org">Razorpay</div>
+                  <div class="timeline-role">Software Engineering Intern — Payments Platform</div>
+                  <div class="timeline-desc">Built a real-time dashboard feature shipped to 40K+ merchants. Stack: React, Go, PostgreSQL.</div>
+                </div>
+              </div>
+              <div class="timeline-item" role="listitem">
+                <div class="timeline-line-col">
+                  <div class="timeline-dot dim"></div>
+                  <div class="timeline-connector"></div>
+                </div>
+                <div class="timeline-content">
+                  <div class="timeline-date">Dec 2022 – Mar 2023</div>
+                  <div class="timeline-org">Toplyne (YC W22)</div>
+                  <div class="timeline-role">Frontend Engineering Intern</div>
+                  <div class="timeline-desc">Owned the onboarding flow redesign — reduced drop-off from 42% to 18%. React + TypeScript.</div>
+                </div>
+              </div>
+              <div class="timeline-item" role="listitem">
+                <div class="timeline-line-col">
+                  <div class="timeline-dot dim"></div>
+                  <div class="timeline-connector"></div>
+                </div>
+                <div class="timeline-content">
+                  <div class="timeline-date">2017 — 2020</div>
+                  <div class="timeline-org">Kendriya Vidyalaya, Pune</div>
+                  <div class="timeline-role">Higher Secondary — Science (PCM + CS)</div>
+                  <div class="timeline-desc">94.6% · State-level science olympiad silver medallist</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Certifications -->
+        <div class="widget anim anim-d3">
+          <div class="widget-head">
+            <span class="widget-title">Certifications</span>
+            <button class="widget-action" id="addCertBtn">+ Add</button>
+          </div>
+          <div class="widget-body">
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <div class="cert-card">
+                <div class="cert-icon" aria-hidden="true">⚛</div>
+                <div class="cert-body">
+                  <div class="cert-title">Meta Front-End Developer Certificate</div>
+                  <div class="cert-issuer">Meta / Coursera</div>
+                  <div class="cert-date">Issued Jan 2024 · No expiry</div>
+                </div>
+                <span class="cert-badge">✓ Verified</span>
+              </div>
+              <div class="cert-card">
+                <div class="cert-icon" aria-hidden="true">☁</div>
+                <div class="cert-body">
+                  <div class="cert-title">AWS Cloud Practitioner (CLF-C02)</div>
+                  <div class="cert-issuer">Amazon Web Services</div>
+                  <div class="cert-date">Issued Oct 2023 · Exp. Oct 2026</div>
+                </div>
+                <span class="cert-badge">✓ Verified</span>
+              </div>
+              <div class="cert-card">
+                <div class="cert-icon" aria-hidden="true">🔷</div>
+                <div class="cert-body">
+                  <div class="cert-title">TypeScript Mastery — Advanced</div>
+                  <div class="cert-issuer">Scrimba</div>
+                  <div class="cert-date">Issued Sep 2023 · No expiry</div>
+                </div>
+                <span class="cert-badge">✓ Verified</span>
+              </div>
+              <div class="cert-card">
+                <div class="cert-icon" aria-hidden="true">🐳</div>
+                <div class="cert-body">
+                  <div class="cert-title">Docker &amp; Kubernetes Fundamentals</div>
+                  <div class="cert-issuer">KodeKloud — In Progress</div>
+                  <div class="cert-date">Expected: April 2024</div>
+                </div>
+                <span style="font-size:9.5px;font-weight:600;padding:3px 10px;border-radius:999px;border:1px solid;background:var(--warn-dim);border-color:rgba(251,191,36,.25);color:var(--warn);flex-shrink:0">In Progress</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ─────────────────────────────────────────
+         ROW 5 — ACHIEVEMENTS + CAREER GOALS
+    ───────────────────────────────────────────── -->
+    <div class="row" role="region" aria-labelledby="row-achieve">
+      <div class="row-label" id="row-achieve">Achievements &amp; Goals</div>
+      <div class="grid-2">
+
+        <!-- Achievements -->
+        <div class="widget anim anim-d2">
+          <div class="widget-head">
+            <span class="widget-title">Achievements</span>
+          </div>
+          <div class="widget-body">
+            <div class="achievement-grid" role="list" aria-label="Career achievements">
+              <div class="achievement-card" role="listitem" aria-label="Streak Master achievement">
+                <div class="achievement-icon" aria-hidden="true">🔥</div>
+                <div class="achievement-name">Streak Master</div>
+                <div class="achievement-desc">14-day learning streak maintained</div>
+              </div>
+              <div class="achievement-card" role="listitem" aria-label="First Offer achievement">
+                <div class="achievement-icon" aria-hidden="true">🎉</div>
+                <div class="achievement-name">First Offer</div>
+                <div class="achievement-desc">Received your first internship offer</div>
+              </div>
+              <div class="achievement-card" role="listitem" aria-label="Top 10% achievement">
+                <div class="achievement-icon" aria-hidden="true">🏆</div>
+                <div class="achievement-name">Top 10%</div>
+                <div class="achievement-desc">Career score in top 10% of users</div>
+              </div>
+              <div class="achievement-card" role="listitem" aria-label="Portfolio Builder achievement">
+                <div class="achievement-icon" aria-hidden="true">📁</div>
+                <div class="achievement-name">Portfolio Builder</div>
+                <div class="achievement-desc">Added 5+ projects to tracker</div>
+              </div>
+              <div class="achievement-card achievement-locked" role="listitem" aria-label="Full Stack badge — locked">
+                <div class="achievement-icon" aria-hidden="true">⚡</div>
+                <div class="achievement-name">Full Stack</div>
+                <div class="achievement-desc">Master both frontend &amp; backend</div>
+              </div>
+              <div class="achievement-card achievement-locked" role="listitem" aria-label="Offer Machine badge — locked">
+                <div class="achievement-icon" aria-hidden="true">🚀</div>
+                <div class="achievement-name">Offer Machine</div>
+                <div class="achievement-desc">Receive 3+ internship offers</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Career Goals -->
+        <div class="widget anim anim-d3">
+          <div class="widget-head">
+            <span class="widget-title">Career Goals</span>
+            <button class="widget-action" id="addGoalBtn">+ Add</button>
+          </div>
+          <div class="widget-body">
+            <div role="list" aria-label="Career goals list">
+              <div class="goal-item" role="listitem">
+                <div class="goal-status active" aria-label="Active goal"></div>
+                <div class="goal-body">
+                  <div class="goal-title">Land a Summer Internship 2024</div>
+                  <div class="goal-desc">Target companies: Linear, Razorpay, Figma, Notion, Vercel. Role: SWE or Product Engineering.</div>
+                  <div class="goal-deadline">⏱ Deadline: April 30, 2024</div>
+                </div>
+                <span class="goal-pct">68%</span>
+              </div>
+              <div class="goal-item" role="listitem">
+                <div class="goal-status active" aria-label="Active goal"></div>
+                <div class="goal-body">
+                  <div class="goal-title">Reach Career Score 85+</div>
+                  <div class="goal-desc">Complete Docker cert + 2 more projects + maintain 20-day streak.</div>
+                  <div class="goal-deadline">⏱ Deadline: May 15, 2024</div>
+                </div>
+                <span class="goal-pct">78%</span>
+              </div>
+              <div class="goal-item" role="listitem">
+                <div class="goal-status done" aria-label="Completed goal"></div>
+                <div class="goal-body">
+                  <div class="goal-title">Build Full-Stack Portfolio Project</div>
+                  <div class="goal-desc">Shipped CareerLaunch AI — a premium SaaS student dashboard with 8 pages.</div>
+                  <div class="goal-deadline">✓ Completed: March 2024</div>
+                </div>
+                <span class="goal-pct" style="color:var(--success)">100%</span>
+              </div>
+              <div class="goal-item" role="listitem">
+                <div class="goal-status future" aria-label="Future goal"></div>
+                <div class="goal-body">
+                  <div class="goal-title">Full-Time SWE Role — 2024 Grad</div>
+                  <div class="goal-desc">Target: product-focused startup or mid-size tech company. Remote-friendly preferred.</div>
+                  <div class="goal-deadline">⏱ Timeline: Aug–Nov 2024</div>
+                </div>
+                <span class="goal-pct" style="color:var(--white-4)">12%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ─────────────────────────────────────────
+         ROW 6 — ACTIVITY SUMMARY + SETTINGS
+    ───────────────────────────────────────────── -->
+    <div class="row" role="region" aria-labelledby="row-activity">
+      <div class="row-label" id="row-activity">Activity &amp; Settings</div>
+      <div class="grid-4030">
+
+        <!-- Activity Summary + Connected Accounts side by side -->
+        <div style="display:grid;grid-template-rows:auto auto;gap:16px;">
+
+          <!-- Activity -->
+          <div class="widget anim anim-d2">
+            <div class="widget-head">
+              <span class="widget-title">Recent Activity</span>
+              <a href="analytics.html" class="widget-action">View Analytics</a>
+            </div>
+            <div class="widget-body" style="padding-top:8px;padding-bottom:8px;">
+              <div class="activity-list" role="list" aria-label="Recent career activities">
+                <div class="activity-item" role="listitem">
+                  <div class="act-icon" style="background:var(--gold-glow)" aria-hidden="true">◈</div>
+                  <div>
+                    <div class="act-title">Completed <strong>React Hooks</strong> module</div>
+                    <div class="act-desc">Skill progress updated to 82% — +7 pts Career Score</div>
+                    <div class="act-time">2 hours ago</div>
+                  </div>
+                </div>
+                <div class="activity-item" role="listitem">
+                  <div class="act-icon" style="background:var(--purple-dim)" aria-hidden="true">◎</div>
+                  <div>
+                    <div class="act-title">Interview scheduled at <strong>Linear</strong></div>
+                    <div class="act-desc">Frontend SWE Intern · Technical round 1 — April 8, 2024</div>
+                    <div class="act-time">Yesterday</div>
+                  </div>
+                </div>
+                <div class="activity-item" role="listitem">
+                  <div class="act-icon" style="background:var(--success-dim)" aria-hidden="true">◫</div>
+                  <div>
+                    <div class="act-title">Added project <strong>CareerLaunch AI</strong></div>
+                    <div class="act-desc">8 pages, 12 skills tagged, marked as Featured</div>
+                    <div class="act-time">2 days ago</div>
+                  </div>
+                </div>
+                <div class="activity-item" role="listitem">
+                  <div class="act-icon" style="background:var(--info-dim)" aria-hidden="true">📄</div>
+                  <div>
+                    <div class="act-title">Applied to <strong>Notion</strong> — Product Engineering</div>
+                    <div class="act-desc">Application submitted via careers portal · Status: Applied</div>
+                    <div class="act-time">3 days ago</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Connected Accounts -->
+          <div class="widget anim anim-d3">
+            <div class="widget-head">
+              <span class="widget-title">Connected Accounts</span>
+            </div>
+            <div class="widget-body">
+              <div role="list" aria-label="Connected external accounts">
+                <div class="connected-row" role="listitem">
+                  <div class="connected-icon" aria-hidden="true">⌥</div>
+                  <div>
+                    <div class="connected-name">GitHub</div>
+                    <div class="connected-handle">github.com/siddharth-k · 24 repos</div>
+                  </div>
+                  <span class="connected-status status-on">Connected</span>
+                </div>
+                <div class="connected-row" role="listitem">
+                  <div class="connected-icon" aria-hidden="true">in</div>
+                  <div>
+                    <div class="connected-name">LinkedIn</div>
+                    <div class="connected-handle">linkedin.com/in/siddharth-k</div>
+                  </div>
+                  <span class="connected-status status-on">Connected</span>
+                </div>
+                <div class="connected-row" role="listitem">
+                  <div class="connected-icon" aria-hidden="true">◈</div>
+                  <div>
+                    <div class="connected-name">Notion</div>
+                    <div class="connected-handle">Not connected</div>
+                  </div>
+                  <button class="connected-status status-off" onclick="alert('Connect Notion')">Connect</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Settings Panel -->
+        <div class="widget anim anim-d4">
+          <div class="widget-head">
+            <span class="widget-title">Profile Settings</span>
+          </div>
+          <div class="widget-body">
+
+            <div class="settings-group">
+              <div class="settings-group-title">Notifications</div>
+              <div class="setting-row">
+                <div>
+                  <div class="setting-label">Career Tips</div>
+                  <div class="setting-desc">Daily AI-generated career recommendations</div>
+                </div>
+                <label class="toggle-wrap" aria-label="Toggle career tips">
+                  <input type="checkbox" checked />
+                  <span class="toggle-track"></span>
+                </label>
+              </div>
+              <div class="setting-row">
+                <div>
+                  <div class="setting-label">Application Reminders</div>
+                  <div class="setting-desc">Reminders for follow-ups and deadlines</div>
+                </div>
+                <label class="toggle-wrap" aria-label="Toggle application reminders">
+                  <input type="checkbox" checked />
+                  <span class="toggle-track"></span>
+                </label>
+              </div>
+              <div class="setting-row">
+                <div>
+                  <div class="setting-label">Weekly Progress Report</div>
+                  <div class="setting-desc">Sunday digest of your weekly stats</div>
+                </div>
+                <label class="toggle-wrap" aria-label="Toggle weekly progress report">
+                  <input type="checkbox" />
+                  <span class="toggle-track"></span>
+                </label>
+              </div>
+            </div>
+
+            <div class="settings-group">
+              <div class="settings-group-title">Privacy</div>
+              <div class="setting-row">
+                <div>
+                  <div class="setting-label">Public Profile</div>
+                  <div class="setting-desc">Allow recruiters to view your profile</div>
+                </div>
+                <label class="toggle-wrap" aria-label="Toggle public profile">
+                  <input type="checkbox" checked />
+                  <span class="toggle-track"></span>
+                </label>
+              </div>
+              <div class="setting-row">
+                <div>
+                  <div class="setting-label">Show Activity Feed</div>
+                  <div class="setting-desc">Display recent activities on your profile</div>
+                </div>
+                <label class="toggle-wrap" aria-label="Toggle activity feed visibility">
+                  <input type="checkbox" checked />
+                  <span class="toggle-track"></span>
+                </label>
+              </div>
+            </div>
+
+            <div class="settings-group" style="margin-bottom:0;">
+              <div class="settings-group-title">Data</div>
+              <div style="display:flex;flex-direction:column;gap:8px;">
+                <button class="btn-secondary-sm" style="justify-content:center;" onclick="alert('Exporting your data as JSON…')">↓ Export All Data (JSON)</button>
+                <button class="btn-secondary-sm" style="justify-content:center;" onclick="alert('Import file selected')">↑ Import Backup</button>
+                <button style="height:36px;padding:0 18px;background:transparent;border:1px solid rgba(248,113,113,.25);border-radius:999px;font-size:11.5px;color:var(--danger);transition:background .2s;" onmouseover="this.style.background='rgba(248,113,113,.08)'" onmouseout="this.style.background='transparent'" onclick="if(confirm('Clear all data? This cannot be undone.')) alert('Data cleared.')">⚠ Clear All Data</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Modal Backdrop -->
+  <div id="modalBackdrop" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:999;"></div>
+
+  <!-- Add Goal Modal -->
+  <div id="goalModal" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--black-2);border:1px solid var(--border);border-radius:16px;z-index:1000;width:90%;max-width:500px;box-shadow:0 20px 60px rgba(0,0,0,.5);">
+    <div style="padding:24px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+      <h3 style="font-family:var(--serif);font-size:20px;font-weight:600;color:var(--white);margin:0;">Add Career Goal</h3>
+      <button id="closeGoalModal" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--white-3);">✕</button>
+    </div>
+    <div style="padding:24px;display:flex;flex-direction:column;gap:16px;">
+      <div class="form-field" style="margin-bottom:0;">
+        <label class="form-label" for="goalTitle">Goal Title</label>
+        <input id="goalTitle" type="text" class="form-input" placeholder="e.g., Land internship at FAANG" />
+      </div>
+      <div class="form-field" style="margin-bottom:0;">
+        <label class="form-label" for="goalDesc">Description</label>
+        <textarea id="goalDesc" class="form-input" rows="3" style="resize:vertical;" placeholder="What do you want to achieve?"></textarea>
+      </div>
+      <div class="form-field" style="margin-bottom:0;">
+        <label class="form-label" for="goalDeadline">Deadline</label>
+        <input id="goalDeadline" type="date" class="form-input" />
+      </div>
+      <div style="display:flex;gap:8px;justify-content:flex-end;padding-top:16px;border-top:1px solid var(--border);">
+        <button class="btn-secondary-sm" id="cancelGoalModal">Cancel</button>
+        <button class="btn-primary" id="submitGoalBtn">Add Goal</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Certification Modal -->
+  <div id="certModal" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--black-2);border:1px solid var(--border);border-radius:16px;z-index:1000;width:90%;max-width:500px;box-shadow:0 20px 60px rgba(0,0,0,.5);">
+    <div style="padding:24px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+      <h3 style="font-family:var(--serif);font-size:20px;font-weight:600;color:var(--white);margin:0;">Add Certification</h3>
+      <button id="closeCertModal" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--white-3);">✕</button>
+    </div>
+    <div style="padding:24px;display:flex;flex-direction:column;gap:16px;">
+      <div class="form-field" style="margin-bottom:0;">
+        <label class="form-label" for="certTitle">Certification Name</label>
+        <input id="certTitle" type="text" class="form-input" placeholder="e.g., AWS Certified Solutions Architect" />
+      </div>
+      <div class="form-field" style="margin-bottom:0;">
+        <label class="form-label" for="certIssuer">Issuing Organization</label>
+        <input id="certIssuer" type="text" class="form-input" placeholder="e.g., Amazon Web Services" />
+      </div>
+      <div class="form-field" style="margin-bottom:0;">
+        <label class="form-label" for="certDate">Issue Date</label>
+        <input id="certDate" type="date" class="form-input" />
+      </div>
+      <div style="display:flex;gap:8px;justify-content:flex-end;padding-top:16px;border-top:1px solid var(--border);">
+        <button class="btn-secondary-sm" id="cancelCertModal">Cancel</button>
+        <button class="btn-primary" id="submitCertBtn">Add Certification</button>
+      </div>
+    </div>
+  </div>
+</div><!-- /.main-area -->
+</div><!-- /.app -->
+
+
+<script>
+  /* ═══════════════════════════════════════════════════════════════
+     PROFILE DATA MANAGEMENT
+  ═══════════════════════════════════════════════════════════════ */
+  
+  const ProfileManager = {
+    // LocalStorage structure: 'careerlaunch_profile'
+    storageKey: 'careerlaunch_profile',
+    
+    // Default profile data
+    defaults: {
+      name: 'Siddharth Kulkarni',
+      title: 'Full Stack Developer',
+      location: 'Pune, Maharashtra',
+      email: 'hello@siddharth.dev',
+      education: 'B.Tech CSE, PICT',
+      bio: 'Aspiring full-stack developer with a passion for building elegant, high-performance web applications. I bridge beautiful design and solid engineering — currently hunting for a summer internship where I can ship real product to real users.\n\nStrong in React, Node.js, and TypeScript. Currently levelling up in Docker, cloud infrastructure, and system design. Open source contributor and weekend hackathon participant.',
+      github: 'github.com/siddharth-k',
+      linkedin: 'linkedin.com/in/siddharth-k',
+      portfolio: 'siddharth.dev',
+      goals: [],
+      certifications: []
+    },
+
+    // Load profile data from localStorage
+    load() {
+      const stored = localStorage.getItem(this.storageKey);
+      return stored ? JSON.parse(stored) : this.defaults;
+    },
+
+    // Save profile data to localStorage
+    save(data) {
+      localStorage.setItem(this.storageKey, JSON.stringify(data));
+    },
+
+    // Calculate profile completion percentage
+    calculateCompletion(data) {
+      let filled = 0;
+      let total = 4; // bio, github, linkedin, portfolio
+      if (data.bio && data.bio.trim().length > 20) filled++;
+      if (data.github && data.github.trim()) filled++;
+      if (data.linkedin && data.linkedin.trim()) filled++;
+      if (data.portfolio && data.portfolio.trim()) filled++;
+      return Math.round((filled / total) * 100);
+    }
+  };
+
+  // ═══════════════════════════════════════════════════════════════
+  // PAGE INITIALIZATION
+  // ═══════════════════════════════════════════════════════════════
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    loadProfileData();
+    setupEventListeners();
+    /* Update nav badges from localStorage */
+    try { var sk = JSON.parse(localStorage.getItem('careerlaunch_skills')||'[]'); var nb = document.getElementById('nav-badge-skills'); if(nb) nb.textContent = Array.isArray(sk)?sk.length:0; } catch(e){}
+    try { var ins = JSON.parse(localStorage.getItem('careerlaunch_internships')||'[]'); var ib = document.getElementById('nav-badge-internships'); if(ib) ib.textContent = Array.isArray(ins)?ins.length:0; } catch(e){}
+  });
+
+  // ═══════════════════════════════════════════════════════════════
+  // LOAD ALL PROFILE DATA
+  // ═══════════════════════════════════════════════════════════════
+  
+  function loadProfileData() {
+    const profileData = ProfileManager.load();
+    
+    // Header elements
+    const headerName = document.getElementById('profile-name-display');
+    const headerTitle = document.getElementById('profile-title-display');
+    
+    // Avatar
+    const profileAvatar = document.getElementById('profile-avatar-initials');
+    
+    // Meta row elements
+    const metaLocation = document.getElementById('meta-location');
+    const metaEmail = document.getElementById('meta-email');
+    const metaEducation = document.getElementById('meta-education');
+    
+    // About section form inputs
+    const nameInput = document.getElementById('name-input');
+    const titleInput = document.getElementById('title-input');
+    const locationInput = document.getElementById('location-input');
+    const emailInput = document.getElementById('email-input');
+    const educationInput = document.getElementById('education-input');
+    const aboutInput = document.getElementById('about-input');
+    const githubInput = document.getElementById('github-input');
+    const linkedinInput = document.getElementById('linkedin-input');
+    const portfolioInput = document.getElementById('portfolio-input');
+    
+    // Sidebar elements
+    const sidebarName = document.getElementById('sidebarName');
+    const sidebarInitials = document.getElementById('sidebarAvatar');
+    
+    // Topbar elements
+    const topbarName = document.getElementById('topbarName');
+    const topbarInitials = document.getElementById('topbarAvatar');
+    
+    // Update header display
+    if (headerName) headerName.textContent = profileData.name || 'User';
+    if (headerTitle) headerTitle.textContent = profileData.title || 'Developer';
+    
+    // Update profile avatar — target the span, not the container (preserves the status dot child)
+    const avatarText = document.getElementById('profile-avatar-text');
+    if (avatarText) {
+      avatarText.textContent = getInitials(profileData.name);
+    }
+    if (profileAvatar) {
+      profileAvatar.setAttribute('aria-label', 'Avatar for ' + (profileData.name || 'User'));
+    }
+    
+    // Update meta row
+    if (metaLocation) metaLocation.textContent = profileData.location || 'Location not set';
+    if (metaEmail) metaEmail.textContent = profileData.email || 'Email not set';
+    if (metaEducation) metaEducation.textContent = profileData.education || 'Education not set';
+    
+    // Update form inputs
+    if (nameInput) nameInput.value = profileData.name || '';
+    if (titleInput) titleInput.value = profileData.title || '';
+    if (locationInput) locationInput.value = profileData.location || '';
+    if (emailInput) emailInput.value = profileData.email || '';
+    if (educationInput) educationInput.value = profileData.education || '';
+    if (aboutInput) aboutInput.value = profileData.bio || '';
+    if (githubInput) githubInput.value = profileData.github || '';
+    if (linkedinInput) linkedinInput.value = profileData.linkedin || '';
+    if (portfolioInput) portfolioInput.value = profileData.portfolio || '';
+    
+    // Update sidebar
+    if (sidebarName) sidebarName.textContent = profileData.name || 'User';
+    if (sidebarInitials) sidebarInitials.textContent = getInitials(profileData.name);
+    
+    // Update topbar
+    if (topbarName) topbarName.textContent = profileData.name || 'User';
+    if (topbarInitials) topbarInitials.textContent = getInitials(profileData.name);
+    
+    // Update profile completion
+    updateProfileCompletion();
+  }
+
+  // ═══════════════════════════════════════════════════════════════
+  // GET INITIALS FROM NAME
+  // ═══════════════════════════════════════════════════════════════
+  
+  function getInitials(name) {
+    if (!name) return 'U';
+    return name.split(' ')
+      .map(word => word[0])
+      .join('')
+      .toUpperCase()
+      .slice(0, 2);
+  }
+
+  // ═══════════════════════════════════════════════════════════════
+  // EDIT MODE TOGGLE
+  // ═══════════════════════════════════════════════════════════════
+  
+  let originalProfileData = null;
+  
+  function enterEditMode() {
+    // Store original data for cancel
+    originalProfileData = ProfileManager.load();
+    
+    // Show edit fields in about section
+    const editFields = document.querySelectorAll('[data-edit-field]');
+    editFields.forEach(field => field.style.display = 'block');
+    
+    // Hide display fields
+    const displayFields = document.querySelectorAll('[data-display-field]');
+    displayFields.forEach(field => field.style.display = 'none');
+    
+    // Toggle header buttons
+    const viewModeActions = document.getElementById('view-mode-actions');
+    const editModeActions = document.getElementById('edit-mode-actions');
+    if (viewModeActions) viewModeActions.style.display = 'none';
+    if (editModeActions) editModeActions.style.display = 'flex';
+    
+    // Populate edit fields with current values
+    loadProfileData();
+  }
+
+  function exitEditMode() {
+    // Hide edit fields
+    const editFields = document.querySelectorAll('[data-edit-field]');
+    editFields.forEach(field => field.style.display = 'none');
+    
+    // Show display fields
+    const displayFields = document.querySelectorAll('[data-display-field]');
+    displayFields.forEach(field => field.style.display = 'inline');
+    
+    // Toggle header buttons
+    const viewModeActions = document.getElementById('view-mode-actions');
+    const editModeActions = document.getElementById('edit-mode-actions');
+    if (viewModeActions) viewModeActions.style.display = 'flex';
+    if (editModeActions) editModeActions.style.display = 'none';
+  }
+
+  function cancelEditMode() {
+    if (originalProfileData) {
+      // Restore form to original values
+      document.getElementById('name-input').value = originalProfileData.name || '';
+      document.getElementById('title-input').value = originalProfileData.title || '';
+      document.getElementById('location-input').value = originalProfileData.location || '';
+      document.getElementById('email-input').value = originalProfileData.email || '';
+      document.getElementById('education-input').value = originalProfileData.education || '';
+      document.getElementById('about-input').value = originalProfileData.bio || '';
+      document.getElementById('github-input').value = originalProfileData.github || '';
+      document.getElementById('linkedin-input').value = originalProfileData.linkedin || '';
+      document.getElementById('portfolio-input').value = originalProfileData.portfolio || '';
+    }
+    exitEditMode();
+  }
+
+  // ═══════════════════════════════════════════════════════════════
+  // SAVE PROFILE CHANGES
+  // ═══════════════════════════════════════════════════════════════
+  
+  function saveProfileChanges() {
+    const profileData = {
+      ...ProfileManager.load(),
+      name: document.getElementById('name-input').value.trim(),
+      title: document.getElementById('title-input').value.trim(),
+      location: document.getElementById('location-input').value.trim(),
+      email: document.getElementById('email-input').value.trim(),
+      education: document.getElementById('education-input').value.trim(),
+      bio: document.getElementById('about-input').value.trim(),
+      github: document.getElementById('github-input').value.trim(),
+      linkedin: document.getElementById('linkedin-input').value.trim(),
+      portfolio: document.getElementById('portfolio-input').value.trim()
+    };
+    
+    ProfileManager.save(profileData);
+    
+    // Update UI immediately
+    updateUIFromProfileData(profileData);
+    exitEditMode();
+    showNotification('Profile saved successfully!');
+  }
+
+  // ═══════════════════════════════════════════════════════════════
+  // UPDATE UI IMMEDIATELY AFTER SAVE
+  // ═══════════════════════════════════════════════════════════════
+  
+  function updateUIFromProfileData(profileData) {
+    // Header
+    const headerName = document.getElementById('profile-name-display');
+    const headerTitle = document.getElementById('profile-title-display');
+    if (headerName) headerName.textContent = profileData.name || 'User';
+    if (headerTitle) headerTitle.textContent = profileData.title || 'Developer';
+    
+    // Avatar — update only the text span, never the container (preserves status dot)
+    const avatarText = document.getElementById('profile-avatar-text');
+    if (avatarText) avatarText.textContent = getInitials(profileData.name);
+    const profileAvatar = document.getElementById('profile-avatar-initials');
+    if (profileAvatar) profileAvatar.setAttribute('aria-label', 'Avatar for ' + (profileData.name || 'User'));
+    
+    // Meta row
+    const metaLocation = document.getElementById('meta-location');
+    const metaEmail = document.getElementById('meta-email');
+    const metaEducation = document.getElementById('meta-education');
+    if (metaLocation) metaLocation.textContent = profileData.location || 'Location not set';
+    if (metaEmail) metaEmail.textContent = profileData.email || 'Email not set';
+    if (metaEducation) metaEducation.textContent = profileData.education || 'Education not set';
+    
+    // Sidebar — use IDs set in HTML
+    const sidebarName = document.getElementById('sidebarName');
+    const sidebarInitials = document.getElementById('sidebarAvatar');
+    if (sidebarName) sidebarName.textContent = profileData.name || 'User';
+    if (sidebarInitials) sidebarInitials.textContent = getInitials(profileData.name);
+    
+    // Topbar — use IDs set in HTML
+    const topbarName = document.getElementById('topbarName');
+    const topbarInitials = document.getElementById('topbarAvatar');
+    if (topbarName) topbarName.textContent = profileData.name || 'User';
+    if (topbarInitials) topbarInitials.textContent = getInitials(profileData.name);
+    
+    // Update completion
+    updateProfileCompletion();
+  }
+
+  // ═══════════════════════════════════════════════════════════════
+  // PROFILE COMPLETION
+  // ═══════════════════════════════════════════════════════════════
+  
+  function updateProfileCompletion() {
+    const profileData = ProfileManager.load();
+    const completion = ProfileManager.calculateCompletion(profileData);
+    const welcomeSub = document.querySelector('.welcome-sub');
+    if (welcomeSub) {
+      welcomeSub.textContent = `Last updated today · Profile completeness: ${completion}%`;
+    }
+  }
+
+  // ═══════════════════════════════════════════════════════════════
+  // SAVE PROFILE
+  // ═══════════════════════════════════════════════════════════════
+  
+  function setupEventListeners() {
+    // Edit Profile button
+    const editProfileBtn = document.getElementById('editProfileBtn');
+    if (editProfileBtn) {
+      editProfileBtn.addEventListener('click', enterEditMode);
+    }
+
+    // Header Cancel button
+    const cancelProfileBtnHeader = document.getElementById('cancelProfileBtn-header');
+    if (cancelProfileBtnHeader) {
+      cancelProfileBtnHeader.addEventListener('click', function(e) {
+        e.preventDefault();
+        cancelEditMode();
+      });
+    }
+
+    // Header Save Profile button
+    const saveProfileBtnHeader = document.getElementById('saveProfileBtn-header');
+    if (saveProfileBtnHeader) {
+      saveProfileBtnHeader.addEventListener('click', function(e) {
+        e.preventDefault();
+        saveProfileChanges();
+      });
+    }
+
+    // Save Changes (from about section)
+    const saveBtn = document.getElementById('saveProfileBtn');
+    if (saveBtn) {
+      saveBtn.addEventListener('click', function() {
+        saveProfileChanges();
+      });
+    }
+
+    // Cancel (from about section)
+    const cancelBtn = document.getElementById('cancelBtn');
+    if (cancelBtn) {
+      cancelBtn.addEventListener('click', cancelEditMode);
+    }
+
+    // Export Resume
+    const exportBtn = document.getElementById('exportResumeBtn');
+    if (exportBtn) {
+      exportBtn.addEventListener('click', function() {
+        exportResume();
+      });
+    }
+
+    // Share Profile
+    const shareBtn = document.getElementById('shareProfileBtn');
+    if (shareBtn) {
+      shareBtn.addEventListener('click', function() {
+        shareProfile();
+      });
+    }
+
+    // Add Goal
+    const addGoalBtn = document.getElementById('addGoalBtn');
+    if (addGoalBtn) {
+      addGoalBtn.addEventListener('click', openGoalModal);
+    }
+
+    // Add Certification
+    const addCertBtn = document.getElementById('addCertBtn');
+    if (addCertBtn) {
+      addCertBtn.addEventListener('click', openCertModal);
+    }
+
+    // Goal Modal
+    const closeGoalModal = document.getElementById('closeGoalModal');
+    const cancelGoalModal = document.getElementById('cancelGoalModal');
+    const submitGoalBtn = document.getElementById('submitGoalBtn');
+    
+    if (closeGoalModal) closeGoalModal.addEventListener('click', closeModal.bind(null, 'goalModal'));
+    if (cancelGoalModal) cancelGoalModal.addEventListener('click', closeModal.bind(null, 'goalModal'));
+    if (submitGoalBtn) submitGoalBtn.addEventListener('click', submitGoal);
+
+    // Cert Modal
+    const closeCertModal = document.getElementById('closeCertModal');
+    const cancelCertModal = document.getElementById('cancelCertModal');
+    const submitCertBtn = document.getElementById('submitCertBtn');
+    
+    if (closeCertModal) closeCertModal.addEventListener('click', closeModal.bind(null, 'certModal'));
+    if (cancelCertModal) cancelCertModal.addEventListener('click', closeModal.bind(null, 'certModal'));
+    if (submitCertBtn) submitCertBtn.addEventListener('click', submitCert);
+
+    // Modal Backdrop
+    const backdrop = document.getElementById('modalBackdrop');
+    if (backdrop) {
+      backdrop.addEventListener('click', function() {
+        closeModal('goalModal');
+        closeModal('certModal');
+      });
+    }
+
+    // Mobile sidebar
+    var menuToggle = document.getElementById('menuToggle');
+    var sidebar    = document.getElementById('sidebar');
+    var overlay    = document.getElementById('sidebarOverlay');
+    function openSidebar()  { sidebar.classList.add('open'); overlay.classList.add('open'); overlay.setAttribute('aria-hidden','false'); menuToggle.setAttribute('aria-expanded','true'); document.body.style.overflow='hidden'; }
+    function closeSidebar() { sidebar.classList.remove('open'); overlay.classList.remove('open'); overlay.setAttribute('aria-hidden','true'); menuToggle.setAttribute('aria-expanded','false'); document.body.style.overflow=''; }
+    if (menuToggle) menuToggle.addEventListener('click', function(){ sidebar.classList.contains('open') ? closeSidebar() : openSidebar(); });
+    if (overlay)    overlay.addEventListener('click', closeSidebar);
+    document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeSidebar(); });
+
+    // Skill fill animations
+    (function(){
+      if (!('IntersectionObserver' in window)) return;
+      var fills = document.querySelectorAll('.skill-fill[data-pct]');
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if (e.isIntersecting) {
+            e.target.style.width = e.target.getAttribute('data-pct') + '%';
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.3 });
+      fills.forEach(function(el){ el.style.width='0%'; io.observe(el); });
+    })();
+  }
+
+  // ═══════════════════════════════════════════════════════════════
+  // EXPORT RESUME
+  // ═══════════════════════════════════════════════════════════════
+  
+  function exportResume() {
+    const profileData = ProfileManager.load();
+    const name     = profileData.name     || 'User';
+    const location = profileData.location || 'Location not set';
+    const email    = profileData.email    || 'email@example.com';
+    const github   = profileData.github   || 'github.com/user';
+    const linkedin = profileData.linkedin || 'linkedin.com/in/user';
+    const portfolio= profileData.portfolio|| '';
+    const bio      = profileData.bio      || '';
+    const education= profileData.education|| 'Education not set';
+
+    const contactLine = [email, github, linkedin, portfolio].filter(Boolean).join(' | ');
+
+    const resumeContent = `${name}
+${location}
+${contactLine}
+
+PROFESSIONAL SUMMARY
+${bio}
+
+TECHNICAL SKILLS
+Frontend: React, Next.js, TypeScript, Tailwind CSS, Redux
+Backend: Node.js, Express, PostgreSQL, MongoDB, Docker
+Tools: Git, GitHub, VS Code, Figma, CI/CD, AWS Basics
+
+EDUCATION
+${education}
+
+EXPERIENCE
+Software Engineering Intern — Razorpay (Jun – Aug 2023)
+- Built real-time dashboard feature shipped to 40K+ merchants
+- Stack: React, Go, PostgreSQL
+
+Frontend Engineering Intern — Toplyne YC W22 (Dec 2022 – Mar 2023)
+- Owned onboarding flow redesign — reduced drop-off from 42% to 18%
+- React + TypeScript
+
+CERTIFICATIONS
+Meta Front-End Developer Certificate (Jan 2024)
+AWS Cloud Practitioner CLF-C02 (Oct 2023)
+TypeScript Mastery — Advanced (Sep 2023)
+
+ACHIEVEMENTS
+- 14-day learning streak maintained
+- Career score in top 8% of users
+- Added 5+ projects to portfolio
+- First internship offer received
+
+Career Profile Completeness: ${ProfileManager.calculateCompletion(profileData)}%
+Generated from CareerLaunch AI | www.careerlaunch.ai`;
+
+    // Create and download file
+    const blob = new Blob([resumeContent], { type: 'text/plain' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${name.replace(/\s+/g, '_')}_Resume.txt`;
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+    
+    showNotification('Resume exported successfully!');
+  }
+
+  // ═══════════════════════════════════════════════════════════════
+  // SHARE PROFILE
+  // ═══════════════════════════════════════════════════════════════
+  
+  function shareProfile() {
+    const shareUrl = `${window.location.origin}/profile.html?id=${Math.random().toString(36).substr(2, 9)}`;
+    
+    navigator.clipboard.writeText(shareUrl).then(function() {
+      showNotification('Profile link copied to clipboard!');
+    }).catch(function() {
+      // Fallback for older browsers
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.value = shareUrl;
+      document.body.appendChild(input);
+      input.select();
+      document.execCommand('copy');
+      document.body.removeChild(input);
+      showNotification('Profile link copied to clipboard!');
+    });
+  }
+
+  // ═══════════════════════════════════════════════════════════════
+  // MODALS
+  // ═══════════════════════════════════════════════════════════════
+  
+  function openGoalModal() {
+    document.getElementById('goalModal').style.display = 'block';
+    document.getElementById('modalBackdrop').style.display = 'block';
+    document.getElementById('goalTitle').focus();
+  }
+
+  function openCertModal() {
+    document.getElementById('certModal').style.display = 'block';
+    document.getElementById('modalBackdrop').style.display = 'block';
+    document.getElementById('certTitle').focus();
+  }
+
+  function closeModal(modalId) {
+    document.getElementById(modalId).style.display = 'none';
+    // Close backdrop if both modals are closed
+    if (document.getElementById('goalModal').style.display === 'none' && 
+        document.getElementById('certModal').style.display === 'none') {
+      document.getElementById('modalBackdrop').style.display = 'none';
+    }
+  }
+
+  function submitGoal() {
+    const title = document.getElementById('goalTitle').value.trim();
+    const desc = document.getElementById('goalDesc').value.trim();
+    const deadline = document.getElementById('goalDeadline').value;
+
+    if (!title) {
+      alert('Please enter a goal title');
+      return;
+    }
+
+    const profileData = ProfileManager.load();
+    profileData.goals.push({
+      id: Date.now(),
+      title: title,
+      description: desc,
+      deadline: deadline,
+      createdAt: new Date().toISOString()
+    });
+
+    ProfileManager.save(profileData);
+    
+    // Clear form
+    document.getElementById('goalTitle').value = '';
+    document.getElementById('goalDesc').value = '';
+    document.getElementById('goalDeadline').value = '';
+    
+    closeModal('goalModal');
+    showNotification('Goal added successfully!');
+  }
+
+  function submitCert() {
+    const title = document.getElementById('certTitle').value.trim();
+    const issuer = document.getElementById('certIssuer').value.trim();
+    const date = document.getElementById('certDate').value;
+
+    if (!title) {
+      alert('Please enter a certification name');
+      return;
+    }
+
+    const profileData = ProfileManager.load();
+    profileData.certifications.push({
+      id: Date.now(),
+      title: title,
+      issuer: issuer,
+      issueDate: date,
+      createdAt: new Date().toISOString()
+    });
+
+    ProfileManager.save(profileData);
+    
+    // Clear form
+    document.getElementById('certTitle').value = '';
+    document.getElementById('certIssuer').value = '';
+    document.getElementById('certDate').value = '';
+    
+    closeModal('certModal');
+    showNotification('Certification added successfully!');
+  }
+
+  // ═══════════════════════════════════════════════════════════════
+  // NOTIFICATION
+  // ═══════════════════════════════════════════════════════════════
+  
+  function showNotification(message) {
+    const notif = document.createElement('div');
+    notif.textContent = message;
+    notif.style.cssText = 'position:fixed;top:20px;right:20px;background:var(--gold);color:var(--black);padding:12px 20px;border-radius:8px;font-size:13px;font-weight:500;z-index:2000;animation:slideIn .3s ease-out;';
+    document.body.appendChild(notif);
+    
+    setTimeout(() => {
+      notif.style.animation = 'slideOut .3s ease-out forwards';
+      setTimeout(() => document.body.removeChild(notif), 300);
+    }, 2500);
+  }
+
+  // Add CSS animations for notification
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes slideIn { from { transform: translateX(400px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    @keyframes slideOut { from { transform: translateX(0); opacity: 1; } to { transform: translateX(400px); opacity: 0; } }
+  `;
+  document.head.appendChild(style);
+</script>
+</body>
+</html>
